@@ -1,0 +1,81 @@
+@import "../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+
+.listadoCertificados{
+    width: 95%;
+}
+
+.listadoCertificados>.listado{
+    margin-top: 15vw;
+    width: 100%;
+}
+.listadoCertificados h2{
+    text-align: center;
+    margin-bottom: 5vw;
+}
+
+.listado> .certificado{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    margin: 5vw 5vw 5vw 5vw;
+    border-radius: 20px;
+    padding: 3vw 5vw;
+    border-bottom: solid 1px $Secondary;
+    -webkit-box-shadow: 0px 1px 5px 0px #474747; 
+    box-shadow: 0px 1px 5px 0px #474747;
+}
+
+.certificado *{
+    margin: 1vw 3vw;
+    width: 100%;
+    text-align: center;
+}
+
+.certificado>.idCurso{
+    width: 100%;
+}
+
+
+.certificado>.graduado{
+    width: 100%;
+    font-size: 4vw;
+}
+
+.certificado>.graduado>.iconoNoGraduado{
+    color: $gray2;
+}
+
+.certificado>.graduado>.iconoGraduado{
+    color: $Secondary;
+}
+
+.certificado>.estadoCur{
+    width: 100%;
+    font-size: 4vw;
+}
+
+
+.certificado>.descargarCertificado{
+    width: 40%;
+    display: none;
+}
+
+.certificadoMobile{
+    display: initial;
+}
+
+.descargarCertificado> img{
+    width: 40%;
+    cursor: pointer;
+}
+
+.certificado>.noDescargarCertificado{
+ width: 100%;
+ font-size: 3vw;   
+}
+
+}

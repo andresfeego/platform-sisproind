@@ -1,0 +1,52 @@
+@import "../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+
+.CajaCerificacion{
+    width: 95%;
+    margin: auto;
+    flex: 1;
+    background-color:  #fff;
+    justify-content: center;
+    top: 2em;
+    position: relative;
+    display: flex;
+    
+}
+
+.CajaCerificacion>.back{
+    background-color: $primary;
+    text-align: center;
+    border-radius: 20px;
+    background: $primaryGradient !important;
+}
+
+
+.CajaCerificacion>.back h2{
+    margin: 0.4vw;
+    padding: 2vw;
+}
+
+.CajaCerificacion>.back>.formulario{
+    height: 70vw !important;
+}
+
+.CajaCerificacion>.back>.formulario img{
+    position: absolute;
+    bottom: 1vw;
+    width: 25vw;
+}
+
+.CajaCerificacion>.back>.formulario form{
+    width: 80%;
+}
+
+
+.CajaCerificacion>.back>.formulario form .inputform{
+    width: 100% ;
+}
+
+
+
+}

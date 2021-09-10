@@ -1,0 +1,75 @@
+@import "../../../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+    
+.estudianteAdmin{
+    width: 95vw;
+    height: fit-content;
+}
+
+.estudianteAdmin .barraUp{
+    height: fit-content;
+    flex-direction: column;
+}
+
+.barraUp .buElement{
+    margin: 0;
+    border-radius: 10px;
+}
+
+
+.filtrosContainer>.btnFiltros{
+    width: 40%;
+}
+
+.barraUp .btnAgregar{
+    width: 100%;
+    padding: 0.8vw 0;
+    margin-top: 2vw;
+}
+
+.btnAgregar .icon, .btnFiltros .icon{
+    margin-right: 0em;
+}
+
+.listado{
+    width: 100%;
+    margin: 1em auto;
+}
+
+.listado> h1{
+    text-align: center;
+}
+
+.barraUp> .volverAtras{
+    width: fit-content;
+    border: solid 1px $third;
+    padding: 2vw;
+    border-radius: 20px;
+    margin-bottom: 2vw;
+}
+
+.filtrosContainer>.filtros{
+    width: 100%;
+    height: auto;
+    position: relative;
+    visibility: hidden;
+    opacity: 0%;
+    
+}
+
+.filtrosContainer>.visible{
+    visibility: visible !important;
+    opacity: 100%;
+
+}
+
+
+.filtros>.inputform{
+    flex: 1;
+    width: 100%;
+    position: unset;
+}
+
+}

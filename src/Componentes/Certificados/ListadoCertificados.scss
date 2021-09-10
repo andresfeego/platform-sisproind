@@ -1,0 +1,81 @@
+@import "../../Inicialized/variables.scss";
+
+.listadoCertificados{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.listadoCertificados>.listado{
+    margin-top: 1vw;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.listado> .certificado{
+    display: flex;
+    align-items: center;
+    height: 2vw;
+    margin-bottom: 0.5vw;
+    border-bottom: solid 1px $Secondary;
+
+}
+
+.certificado *{
+    margin-left: 0.5vw;
+}
+
+.certificado>.idCurso{
+    width: 8%;
+}
+
+.certificado>.nombreCurso{
+    flex: 1;
+    color: $Secondary;
+}
+
+
+.certificado>.graduado{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.5vw;
+}
+
+.certificado>.graduado>.iconoNoGraduado{
+    color: $gray2;
+}
+
+.certificado>.graduado>.iconoGraduado{
+    color: $Secondary;
+}
+
+.certificado>.estadoCur{
+    width: 12%;
+    text-align: center;
+}
+
+
+.certificado>.descargarCertificado{
+    width: 8%;
+    display: initial;
+}
+
+.descargarCertificado> img{
+    width: 40%;
+    cursor: pointer;
+}
+
+.certificado>.noDescargarCertificado{
+ width: 8%;
+ font-size: 0.5em;   
+}
+
+.certificadoMobile{
+    display: none;
+}

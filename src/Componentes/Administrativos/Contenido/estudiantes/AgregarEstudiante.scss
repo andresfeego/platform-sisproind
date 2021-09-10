@@ -1,0 +1,62 @@
+@import "../../../../Inicialized/variables.scss";
+
+.formularioUniStep *{
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.agregarTelefono {
+    display: flex;
+}
+
+.listaTelefonos{
+    border: solid 1px $Secondary;
+    border-radius: 10px;    
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.listaTelefonos .telefono{
+    margin: 0.5em;
+    background-color: $gray1;
+    width: fit-content;
+    border-radius: 15px;
+    padding: 0.2em 0.5em;
+    display: flex;
+}
+
+
+.telefono .eliminarTelefono *{
+    margin-bottom: 0;
+}
+
+.telefono .eliminarTelefono {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.tituloAgregarActividad{
+    font-size: 1.5em;
+}
+
+.formularioUniStep .submit{
+    border: 2px solid $Secondary;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.nombreListado{
+    font-size: 0.8em;
+    color: $Secondary !important;
+}
+
+.formularioUniStep .submit:hover{
+    background-color: $Secondary;
+}
+
+.formularioUniStep span{
+    color: $gray2;
+}

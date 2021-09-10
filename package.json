@@ -1,0 +1,54 @@
+{
+  "name": "sisproind",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/date-fns": "^1.3.13",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
+    "@react-pdf/renderer": "^1.6.12",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "date-fns": "^2.16.1",
+    "i": "^0.3.6",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "npm": "^6.14.10",
+    "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.3",
+    "react-dom": "^16.13.1",
+    "react-favicon": "0.0.18",
+    "react-meta-tags": "^1.0.1",
+    "react-moment": "^1.1.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-spinners": "^0.9.0",
+    "react-toastify": "^6.0.9",
+    "redux": "^4.0.5",
+    "superagent": "^6.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

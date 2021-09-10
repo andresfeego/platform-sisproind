@@ -1,0 +1,16 @@
+@import "../../../Inicialized/variables.scss";
+
+.ContenidoUsuario{
+    width: 70%;
+    margin: auto;
+    padding-top: 2em;
+}
+
+@media screen and (max-width: 767px) {
+
+    .ContenidoUsuario{
+        padding-top: 0.5em;
+        width: 95vw;
+    }
+    
+}

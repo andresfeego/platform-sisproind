@@ -1,0 +1,16 @@
+@import "../../../../Inicialized/variables.scss";
+@media screen and (max-width: 767px) {
+
+.botonContenidoUno{
+    background-color: #ffab00;
+    width: 5vw;
+    border-radius: 0 1vw 1vw 0;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}
+
+}

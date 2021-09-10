@@ -1,0 +1,61 @@
+@import "../../../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+
+.detalleEstudiante{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: auto;
+}
+
+
+.detalleEstudiante .imagenPerfil{
+    width: 5vw;
+}
+
+
+.datosPersonales {
+    display: flex;
+    flex-direction: column;
+}
+
+.datosPersonales *{
+    margin-top: 0.5em;
+}
+
+.detalleEstudiante h3{
+    color: $primary;
+    font-size: 1.5em;
+}
+
+.detalleEstudiante .volverAtras, .detalleEstudiante a{
+    padding: 0.2em 1em;
+    border-radius: 20px;
+    border: solid 1px $third;
+}
+
+.editarEstado{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btnEditarEstadoCurso {
+    background-color: #ffab00;
+    width: fit-content;
+    border-radius: 20px;
+    padding: 0.3vw 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.editarEstado>.estado{
+    margin-right: 0.5vw;
+}
+
+
+}

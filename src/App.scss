@@ -1,0 +1,55 @@
+@import "../src/Inicialized/variables.scss";
+
+a:-webkit-any-link {
+  color: initial;
+  text-decoration: initial;
+}
+
+.MuiInput-underline:after {
+ 
+  border-bottom: 2px solid $Secondary !important;
+
+}
+
+
+.MuiInput-underline {
+  background-color: $gray0 !important;
+  border-radius: 3vw !important;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  overflow: hidden;
+}
+
+input:-internal-autofill-selected {
+  background-color: $gray1 !important;
+}
+
+input[type="submit" i]:hover{
+  background-color: $Secondary;
+}
+
+input[type="submit" i]{
+  border-radius: 3vw;
+  border-bottom: 0px!important;
+  cursor: pointer;-webkit-box-shadow: 0px 0px 9px -2px rgba(0,0,0,0.68); 
+  box-shadow: 0px 0px 9px -2px rgba(0,0,0,0.68);
+}
+
+.MuiInput-underline:before {
+    border-bottom: none !important;
+}
+
+.MuiSvgIcon-root, .MuiIconButton-label{
+  margin-bottom: 0em !important;
+}
+
+
+.MuiFormControl-marginNormal {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.MuiFormControl-root{
+  margin-right: 0.5vw !important;
+  width: 100%;
+}

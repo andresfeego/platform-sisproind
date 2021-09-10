@@ -1,0 +1,58 @@
+@import "../Inicialized/variables.scss";
+
+@media screen and (max-width: 780px) {
+    
+    
+    .headerPlataforma{
+        height: 60vw;
+        margin-top: 10vw;
+    }
+    
+    .upHeader{
+        height: fit-content;
+        flex-direction: column;
+        padding: 0;
+    }
+    
+    .upHeader img{
+        height: 10vw;   
+        margin-top: 1vw;
+        position: unset;
+    }
+    
+    .upHeader .menu{
+        width: 100%;
+        margin-top: 3vw;
+    }
+    
+    .upHeader .menu .btnMenu{
+        margin-right: 0vw;
+        font-size: 2.5vw;
+        flex: 1;
+        text-align: center;
+        padding: 0 3vw;
+    }
+    
+    .upHeader .menu .activo{
+        color: $primary;
+        font-size: 3.2vw;
+        border-bottom:  solid 2px;
+    }
+    
+    .seccionNoEncontrada{
+        left: 5vw;
+        width: 90vw;
+        font-size: 5vw;
+        bottom: -28vw;
+    }
+    
+   
+    .downHeader>.tituloSeccion{
+        bottom: 0px;
+        left: 0;
+        height: 10%;
+        font-size: 6vw;
+        padding: 2.5vw ;
+    }
+
+}

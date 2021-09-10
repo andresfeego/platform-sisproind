@@ -1,0 +1,96 @@
+@import "../../../../Inicialized/variables.scss";
+
+.estudianteAdmin{
+    width: 50vw;
+    height: 100px;
+    margin: auto;
+}
+
+.estudianteAdmin .barraUp{
+    display: flex;
+    justify-content: flex-end;
+    height: 2vw;
+}
+
+.barraUp .buElement{
+    margin: 0 1vw 0 0;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.barraUp .filtrosContainer{
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.filtrosContainer>.btnFiltros{
+    width: 8vw;
+    height: 100%;
+    display: flex;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: #69a3ba;
+    color: $gray0;
+    cursor: pointer;
+}
+
+.barraUp .btnAgregar{
+    width: 10vw;
+    justify-content: center;
+    background-color: $third;
+    color: $gray2;
+    cursor: pointer;
+}
+
+.btnAgregar .icon, .btnFiltros .icon{
+    margin-right: 0.5em;
+}
+
+.listado{
+    width: 100%;
+    margin: 1em auto;
+}
+
+.listado> h1{
+    text-align: center;
+}
+
+.barraUp> .volverAtras{
+    width: fit-content;
+    cursor: pointer;
+}
+
+.filtrosContainer *{
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.filtrosContainer>.filtros{
+    width: 100%;
+    height: 50px;
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    
+}
+
+.filtrosContainer>.visible{
+    visibility: visible !important;
+    opacity: 100;
+
+}
+
+
+.filtros>.inputform{
+    width: 70%;
+    position: absolute;
+    right: 0;
+    top: 0.5vw;
+    border: solid 1px #69a3ba;
+}

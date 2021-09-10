@@ -1,0 +1,40 @@
+@import "../../Inicialized/variables.scss";
+
+
+@media screen and (max-width: 767px) {
+
+    
+
+.Login{
+    //border: 2px solid red;
+    width: 100%;
+}
+
+.backLogin h2{
+    margin: 2vw;
+}
+
+.formularioLogin{
+    width: 90vw;
+    height: 80vw; 
+    -webkit-box-shadow: 0px 1px 5px 0px #474747; 
+    box-shadow: 0px 1px 5px 0px #474747;
+}
+
+.formularioLogin img{
+    width: 10vw;
+}
+
+.formularioLogin form{
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+
+
+
+
+}

@@ -1,0 +1,29 @@
+@import "../../../../Inicialized/variables.scss";
+
+.estudiante{
+    display: flex;
+    flex-direction: row;
+    border-radius: 1vw;
+    height: 2em;
+    align-items: center;
+    background-color: $gray0;
+    margin-bottom: 0.5em;
+}
+
+.estudiante .inactivo{
+    background-color: $gray1 !important;
+}
+
+.estudiante .identificacion{
+    background-color: $primary;
+    height: 100%;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+    margin-right: 1em;
+}
+
+.estudiante .nombres{
+    flex: 1;
+}

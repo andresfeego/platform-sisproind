@@ -1,0 +1,93 @@
+@import "../Inicialized/variables.scss";
+
+.headerPlataforma{
+    height: 15vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.upHeader{
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 3vw;
+    z-index: 1;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    
+}
+
+.upHeader img{
+    height: 3.4vw;   
+    margin-right: 3vw; 
+    position: absolute;
+    left: 25vw;
+}
+
+.upHeader .menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upHeader .menu .btnMenu{
+    margin-right: 2vw;
+    font-size: 0.8;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.upHeader .menu .activo{
+    color: $primary;
+    font-size: 1.2em;
+    border-bottom:  solid 2px;
+}
+
+.seccionNoEncontrada{
+    position: absolute;
+    left: 50%;
+    color: #313030;
+    bottom: -8em;
+    width: 35vw;
+    font-size: 0.5em;
+    text-align: center;
+    font-weight: 100;
+}
+
+.downHeader{
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../image/header/fondoheader.jpg");
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../image/header/fondoheader.jpg");
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../image/header/fondoheader.jpg");
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../image/header/fondoheader.jpg");
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.1))), url("../image/header/fondoheader.jpg");
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../image/header/fondoheader.jpg");
+     background-size: cover;
+    background-position: center;
+    flex: 1;
+    position: relative;
+}
+
+.downHeader .tituloSeccion{
+    position: absolute;
+    left: 10em;
+    bottom: 0;
+    height: 50%;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+    padding: 0 1vw 0 1vw;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(243,169,73,1);
+    background: -moz-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(243,169,73,1)), color-stop(100%, rgba(253,128,114,1)));
+    background: -webkit-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -o-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -ms-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: linear-gradient(to right, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+
+}

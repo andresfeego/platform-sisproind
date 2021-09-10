@@ -1,0 +1,44 @@
+@import "../../../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+    
+    .barraUsuario{
+        background-color: $primary;
+        height: 8vw;
+        top: 0;
+        width: 100%;
+        position: absolute;      
+    }
+    
+    .barraUsuario>.txtnombre{
+        margin-right: 1vw;
+        font-size: 4vw;
+}
+
+.iconoUser img{
+    width: 7vw;
+    margin-right: 1vw;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.iconoUser{
+    cursor: pointer;
+}
+
+.detalleUsuario{
+    display: flex;
+    flex-direction: column;
+}
+
+.detalleUsuario img{
+    width: 6vw;
+    margin-bottom: 1vw;
+    border-radius: 50%;
+    background-color: #fff;
+    border: solid 1px $primary;
+    align-self: center;
+}
+
+}

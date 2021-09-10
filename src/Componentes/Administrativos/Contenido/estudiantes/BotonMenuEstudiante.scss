@@ -1,0 +1,9 @@
+@import "../../../../Inicialized/variables.scss";
+
+.botonContenidoUno{
+    background-color: $primary;
+    height: 100%;
+    width: 1.5vw;
+    border-radius: 0 1vw 1vw 0;
+    cursor: pointer;
+}

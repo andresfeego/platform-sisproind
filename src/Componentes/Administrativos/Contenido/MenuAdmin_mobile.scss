@@ -1,0 +1,26 @@
+@import "../../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+
+.menuAdministrativos {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ItemMenuUsu {
+    width: 30vw;
+    height: 30vw;
+    margin: 3vw;
+}
+
+.ItemMenuUsu img{
+    width: 20vw;
+}
+
+.ItemMenuUsu span{
+    font-size: 4vw;
+}
+
+}

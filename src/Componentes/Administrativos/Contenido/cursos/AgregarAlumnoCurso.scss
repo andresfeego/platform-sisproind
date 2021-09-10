@@ -1,0 +1,36 @@
+@import "../../../../Inicialized/variables.scss";
+
+.btnAgregarAlumnoCurso {
+    background-color: #ffab00;
+    width: fit-content;
+    border-radius: 20px;
+    padding: 0.3vw 1vw;
+    display: flex;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.listaEstudiantesAgregar{
+    min-height: 15vw;
+    border-radius: 10px;
+    border: solid 1px $gray1;
+    padding: 0.5vw;
+}
+
+.estudianteAgregar{
+    margin-bottom: 0.5vw;
+    display: flex;
+    align-items: center;
+}
+
+.estudianteAgregar> .btnAgregar{
+    background-color: yellowgreen;
+    width: fit-content;
+    padding: 0.3vw;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.estudianteAgregar> .texto{
+    flex: 1;
+}

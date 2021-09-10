@@ -1,0 +1,46 @@
+@import "../../../../Inicialized/variables.scss";
+
+.barraUsuario{
+    background-color: $primary;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: rgba(243,169,73,1);
+    background: -moz-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(243,169,73,1)), color-stop(100%, rgba(253,128,114,1)));
+    background: -webkit-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -o-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: -ms-linear-gradient(left, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+    background: linear-gradient(to right, rgba(243,169,73,1) 0%, rgba(253,128,114,1) 100%);
+}
+
+.barraUsuario>.txtnombre{
+    margin-right: 1vw;
+    color: #fff;
+}
+
+.iconoUser img{
+    background-color: #fff;
+    width: 2vw;
+    margin-right: 1vw;
+    border-radius: 50%;
+}
+
+.iconoUser{
+    cursor: pointer;
+}
+
+.detalleUsuario{
+    display: flex;
+    flex-direction: column;
+}
+
+.detalleUsuario img{
+    width: 6vw;
+    margin-bottom: 1vw;
+    border-radius: 50%;
+    background-color: #fff;
+    border: solid 1px $primary;
+    align-self: center;
+}

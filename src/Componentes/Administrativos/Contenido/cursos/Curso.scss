@@ -1,0 +1,68 @@
+@import "../../../../Inicialized/variables.scss";
+
+.curso{
+    display: flex;
+    flex-direction: row;
+    border-radius: 1vw;
+    align-items: center;
+    background-color: $gray0;
+    margin-bottom: 0.5em;
+
+}
+
+.Creado{
+    background-color: $third !important;
+}
+
+.Matriculas{
+    background-color: $matriculas !important;
+    color: #fff !important;
+}
+
+.Cursando{
+    background-color: $cursando !important;
+}
+
+.Cerrado{
+    background-color: $primary !important;
+}
+
+
+.curso .idCurso{
+    background-color: $primary;
+    height: 100%;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+    margin-right: 1em;
+    color: #000;
+}
+
+.curso .nombre{
+    flex: 1;
+    height: fit-content;
+}
+
+.curso>.codMat{
+    display: flex;
+    align-items: center;
+
+}
+
+.codMat .estado{
+    margin-right: 1vw;
+}
+
+.codMat>.codigo{
+    margin-right: 0.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.codigo>.icon{
+    margin-right: 0.5vw;
+    color: $gray2;
+    cursor: pointer;
+}

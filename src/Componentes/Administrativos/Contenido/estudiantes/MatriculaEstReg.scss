@@ -1,0 +1,35 @@
+@import "../../../../Inicialized/variables.scss";
+ 
+.backMatricula{
+    padding: 1vw;
+    margin-top: 1vw;
+    border-radius: 20px;
+    box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.68);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5vw;
+}
+
+.matriculado{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.matriculado span{
+    text-align: center;
+    margin-bottom: 1vw;
+}
+
+.matriculado img{
+    width: 50%;
+}
+
+.codTemp{
+    border: solid 1px $primary;
+}
+
+.matricular{
+    margin-top: 1vw;
+}

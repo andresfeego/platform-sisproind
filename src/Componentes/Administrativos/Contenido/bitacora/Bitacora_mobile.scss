@@ -1,0 +1,63 @@
+@import "../../../../Inicialized/variables.scss";
+
+@media screen and (max-width: 767px) {
+
+
+.bitacora{
+    width: 98%;
+    margin: 0 auto;
+}
+.bitacora>.volverAtras{
+    margin-bottom: 1vw;
+}
+
+.bitacora>.filtrosBitacora{
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 8vw;
+}
+
+.bitacora>.filtrosBitacora>.containerFechas{
+    width: 100%;
+}
+
+.bitacora>.filtrosBitacora>.inputform{
+    width: 100%;
+    height: auto;
+    margin-top: 3vw;
+}
+
+.filtroIdUsuBit{
+    flex: 1;
+}
+
+
+.bitacora>.listaBitacora{
+    font-size: 3.5vw;
+}
+
+.listaBitacora>.eventoBitacora{
+    margin-bottom: 3vw;
+}
+
+.eventoBitacora>.txtDescripcion{
+    flex: 1;
+}
+
+
+.eventoBitacora>.txtTipoEvento {
+    color: $Secondary;
+    margin-right: 2vw;
+}
+
+.eventoBitacora>.txtIDUsuario, .eventoBitacora>.txtTipoEvento, .eventoBitacora>.txtFechaHora {
+    width: 18%;
+}
+
+.containerFechas>.MuiGrid-container {
+    flex-wrap: wrap !important; 
+    width: 100%;
+
+  }
+
+}
