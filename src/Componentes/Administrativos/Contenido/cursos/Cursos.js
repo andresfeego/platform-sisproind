@@ -3,11 +3,12 @@ import AgregarCurso from './AgregarCurso';
 import Curso from './Curso';
 import DetalleCurso from './DetalleCurso';
 import SearchSharpIcon from '@material-ui/icons/SearchSharp';
-import request from 'superagent';
+import { getDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import Cargando from '../../../../Inicialized/Cargando';
 import { Input } from '@material-ui/core';
 import { zfill } from '../../../../Inicialized/FuncionesGlobales';
+import "./Cursos.scss"
 
 var buscar
 
@@ -45,8 +46,7 @@ export default class Cursos extends Component {
 
     getCursos() {
 
-        request
-            .get('/responseSisproind/cursos')
+        getDb('/responseSisproind/cursos')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -211,7 +211,7 @@ export default class Cursos extends Component {
 
 
         return (
-            <div className="estudianteAdmin">
+            <div className="estudianteAdmin cursosAdmin">
 
                 {this.renderContenido()}
 

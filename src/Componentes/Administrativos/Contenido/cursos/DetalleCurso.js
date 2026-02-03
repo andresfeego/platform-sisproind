@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import Cargando from '../../../../Inicialized/Cargando';
 import AgregarAlumnoCurso from './AgregarAlumnoCurso';
 import "./DetalleCurso.scss"
@@ -64,8 +64,7 @@ export default class DetalleCurso extends Component {
 
         return new Promise((resolve, reject) => {
 
-            request
-                .get('/responseSisproind/estudianteXcurso/' + this.props.curso.id)
+            getDb('/responseSisproind/estudianteXcurso/' + this.props.curso.id)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -92,8 +91,7 @@ export default class DetalleCurso extends Component {
 
         nuevoMensaje(tiposAlertas.cargando, "Eliminando alumno")
 
-        request
-            .post('/responseSisproind/eliminarAlumnoDecurso')
+        setDb('/responseSisproind/eliminarAlumnoDecurso')
             .send({ idCurso: this.props.curso.id, idEstudiante: idEstudiante })
             .set('accept', 'json')
             .end((err, res) => {
@@ -122,8 +120,7 @@ export default class DetalleCurso extends Component {
 
         nuevoMensaje(tiposAlertas.cargando, "Cambiando estado de alumno en curso")
 
-        request
-            .post('/responseSisproind/cambiarEstadoGraduado')
+        setDb('/responseSisproind/cambiarEstadoGraduado')
             .send({ idCurso: this.props.curso.id, idEstudiante: estudiante.id, graduado: accion })
             .set('accept', 'json')
             .end((err, res) => {
@@ -195,6 +192,10 @@ export default class DetalleCurso extends Component {
                     <span><strong>Fecha creación: </strong> {moment(curso.fechaCreacion).format('LLLL')} </span>
                     <span><strong>Fecha Inicio: </strong>  {moment(curso.fechaInicio).format('LLLL')} </span>
                     <span><strong>Fecha Cierre: </strong>  {moment(curso.fechaCierre).format('LLLL')}  </span>
+                    <span><strong>Empresa: </strong> {curso.empresa || "--"} </span>
+                    <span><strong>NIT: </strong> {curso.nit || "--"} </span>
+                    <span><strong>R.L: </strong> {curso.rl || "--"} </span>
+                    <span><strong>ARL: </strong> {curso.arl || "--"} </span>
 
                 </div>
 

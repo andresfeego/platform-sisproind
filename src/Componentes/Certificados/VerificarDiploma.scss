@@ -1,0 +1,82 @@
+.VerificarDiploma {
+  min-height: 60vh;
+  padding: 32px 20px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.VerificarDiploma .panel {
+  width: 100%;
+  max-width: 860px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+}
+
+.VerificarDiploma .titulo {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.VerificarDiploma .estado {
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.VerificarDiploma .estado.ok {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.VerificarDiploma .estado.bad {
+  background: #fdecea;
+  color: #b00020;
+}
+
+.VerificarDiploma .subtitulo {
+  margin-top: 6px;
+  color: #555;
+  font-size: 14px;
+}
+
+.VerificarDiploma .mensaje {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #444;
+}
+
+.VerificarDiploma .mensaje.error {
+  color: #b00020;
+}
+
+.VerificarDiploma .tabla {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.VerificarDiploma .row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.VerificarDiploma .label {
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
+.VerificarDiploma .value {
+  color: #222;
+  word-break: break-word;
+}

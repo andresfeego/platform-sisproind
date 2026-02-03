@@ -1,0 +1,120 @@
+@import "../../../../Inicialized/variables.scss";
+
+.cursosAdmin .barraUp {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid $gray2;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.cursosAdmin .volverAtras {
+    color: $gray2;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cursosAdmin .filtrosContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.cursosAdmin .filtros {
+    flex: 1;
+}
+
+.cursosAdmin .filtros .inputform {
+    width: 100%;
+}
+
+.cursosAdmin .btnFiltros {
+    background: $gray2;
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.cursosAdmin .btnAgregar {
+    margin-left: auto;
+    background: $gray2;
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cursoModal .inputform::placeholder {
+    color: $gray2;
+    opacity: 1;
+}
+
+.cursoModal input::placeholder {
+    color: $gray2;
+    opacity: 1;
+}
+
+.cursoModal .inputform {
+    background: #fff;
+}
+
+.cursoModal .inputform input {
+    background: #fff;
+}
+
+.cursoModal .MuiFormControl-root {
+    width: 100%;
+    margin: 16px 0;
+}
+
+.cursoModal .MuiInputBase-root {
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 2px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cursoModal .MuiInputBase-input {
+    width: 100%;
+}
+
+.cursoModal .MuiInputBase-input {
+    padding: 8px 0;
+}
+
+.cursoModal .MuiInput-underline:before,
+.cursoModal .MuiInput-underline:after {
+    border-bottom: none !important;
+}
+
+.cursoModal .MuiInputBase-input::placeholder {
+    color: $gray2;
+    opacity: 1;
+}
+
+.cursoModal .MuiSelect-icon {
+    color: $gray2;
+}
+
+.cursosAdmin .listado {
+    margin-top: 16px;
+}
+
+.cursosAdmin .listado > h1 {
+    margin: 16px 0;
+    color: $Secondary;
+    font-size: 1.2em;
+}

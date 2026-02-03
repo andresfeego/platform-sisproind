@@ -2,7 +2,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { Grid, Input, MenuItem, Select } from '@material-ui/core'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import React, { Component } from 'react'
-import request from 'superagent'
+import { getDb } from '../../../../Inicialized/ApiDb';
 import Cargando from '../../../../Inicialized/Cargando'
 import "./Bitacora.scss"
 import "./Bitacora_mobile.scss"
@@ -56,8 +56,7 @@ export default class Bitacora extends Component {
     }
 
     getBitacora() {
-        request
-            .get('/responseSisproind/bitacora')
+        getDb('/responseSisproind/bitacora')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -79,8 +78,7 @@ export default class Bitacora extends Component {
     }
 
     getTiposEventosBitacora() {
-        request
-            .get('/responseSisproind/tiposEventosBitacora')
+        getDb('/responseSisproind/tiposEventosBitacora')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -101,8 +99,7 @@ export default class Bitacora extends Component {
     }
 
     getUsuarioSistema() {
-        request
-            .get('/responseSisproind/usuariosSistema')
+        getDb('/responseSisproind/usuariosSistema')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

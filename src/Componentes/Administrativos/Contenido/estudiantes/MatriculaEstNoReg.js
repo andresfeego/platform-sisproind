@@ -1,7 +1,7 @@
 import { FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import React, { Component } from 'react'
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import Matriculado from './Matriculado';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
@@ -37,8 +37,7 @@ export default class MatriculaEstNoReg extends Component {
     }
 
     getTipoDocumento() {
-        request
-            .get('/responseSisproind/tipoDocumento')
+        getDb('/responseSisproind/tipoDocumento')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -90,8 +89,7 @@ export default class MatriculaEstNoReg extends Component {
 
     validarUsuarioExistente() {
         return new Promise((resolve, reject) => {
-            request
-                .get('/responseSisproind/estudianteExiste/' + this.state.cedula)
+            getDb('/responseSisproind/estudianteExiste/' + this.state.cedula)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -170,8 +168,7 @@ export default class MatriculaEstNoReg extends Component {
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/crearEstudiante')
+            setDb('/responseSisproind/crearEstudiante')
                 .send({ id: this.state.cedula, tipoDoc: this.state.tipoDocumento, nombres: this.state.nombres, apellidos: this.state.apellidos, email: this.state.email, telefonos: this.state.telefonos })
                 .set('accept', 'json')
                 .end((err, res) => {
@@ -195,8 +192,7 @@ export default class MatriculaEstNoReg extends Component {
     matricular(curso) {
         return new Promise((resolve, reject) => {
 
-            request
-                .post('/responseSisproind/matricula')
+            setDb('/responseSisproind/matricula')
                 .send({ idCurso: curso.id, idEstudiante: this.state.cedula })
                 .set('accept', 'json')
                 .end((err, res) => {
@@ -217,8 +213,7 @@ export default class MatriculaEstNoReg extends Component {
     consultar() {
         return new Promise((resolve, reject) => {
 
-            request
-                .get('/responseSisproind/consultarMatriculaCurso/' + this.state.codigoTemp)
+            getDb('/responseSisproind/consultarMatriculaCurso/' + this.state.codigoTemp)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {

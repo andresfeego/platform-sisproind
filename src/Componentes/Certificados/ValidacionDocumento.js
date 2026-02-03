@@ -1,6 +1,6 @@
 import { Input } from '@material-ui/core'
 import React, { Component } from 'react'
-import request from 'superagent'
+import { getDb } from '../../Inicialized/ApiDb';
 import { agregarEventoBitacora } from '../../Inicialized/Bitacora'
 import { nuevoMensaje, tiposAlertas } from '../../Inicialized/Toast'
 import "./CajaCerificacion.scss"
@@ -19,8 +19,7 @@ export default class ValidacionDocumento extends Component {
 consultar(){
 
     nuevoMensaje(tiposAlertas.cargando, "Consultando...")
-    request
-    .get('/responseSisproind/estudianteActivo/'+this.state.id)
+    getDb('/responseSisproind/estudianteActivo/'+this.state.id)
     .set('accept', 'json')
     .end((err, res) => {
             if (err) {

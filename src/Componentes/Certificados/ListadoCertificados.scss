@@ -9,8 +9,51 @@
     align-items: center;
 }
 
+.tituloCertificados{
+    width: 100%;
+    background: #fff;
+    border: 1px solid $Secondary;
+    border-radius: 12px;
+    padding: 1.2vw 1.4vw;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1vw;
+}
+
+.tituloTexto{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+}
+
+.tituloLabel{
+    color: $gray2;
+    font-size: 0.9vw;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.tituloNombre{
+    color: $Secondary;
+    font-size: 1.3vw;
+    font-weight: 600;
+}
+
+.btnCambiarPersona{
+    background: $Secondary;
+    color: #fff;
+    border: none;
+    padding: 0.6vw 1vw;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8vw;
+}
+
 .listadoCertificados>.listado{
     margin-top: 1vw;
+    padding-top: 32px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -18,10 +61,10 @@
 
 .listado> .certificado{
     display: flex;
-    align-items: center;
-    height: 2vw;
+    align-items: flex-start;
     margin-bottom: 0.5vw;
     border-bottom: solid 1px $Secondary;
+    padding: 0.6vw 0;
 
 }
 
@@ -30,7 +73,7 @@
 }
 
 .certificado>.idCurso{
-    width: 8%;
+    width: 9%;
 }
 
 .certificado>.nombreCurso{
@@ -58,12 +101,23 @@
 .certificado>.estadoCur{
     width: 12%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.5vw;
 }
 
 
 .certificado>.descargarCertificado{
     width: 8%;
     display: initial;
+}
+
+.certificado>.descargarDiploma{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .descargarCertificado> img{
@@ -78,4 +132,23 @@
 
 .certificadoMobile{
     display: none;
+}
+
+.estadoIcon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.estadoLabel{
+    margin-top: 0.2vw;
+}
+
+.diplomaIcon{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3vw;
+    color: $Secondary;
+    cursor: pointer;
+    font-size: 0.6vw;
 }

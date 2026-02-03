@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import "./BotonMenuEstudiante.scss"
 import "./BotonMenuEstudiante_mobile.scss"
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
-import request from 'superagent';
+import { setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import EditarEstudiante from './EditarEstudiante';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
@@ -54,8 +54,7 @@ export default class BotonMenuEstudiante extends Component {
             labelActivar = "Desactivar "
         }
 
-        request
-            .post('/responseSisproind/actDesEstu')
+        setDb('/responseSisproind/actDesEstu')
             .set('accept', 'json')
             .send({ accion: accion, id: estudiante.id })
             .end((err, res) => {

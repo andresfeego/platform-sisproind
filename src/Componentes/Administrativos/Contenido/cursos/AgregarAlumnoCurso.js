@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import React, { Component } from 'react'
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import "./AgregarAlumnoCurso.scss"
 import Cargando from '../../../../Inicialized/Cargando';
@@ -68,8 +68,7 @@ export default class AgregarAlumnoCurso extends Component {
    getEstudiantes(){
 
     return new Promise ((resolve, reject) => {
-        request
-        .get('/responseSisproind/estudiantesParaBusqueda')
+        getDb('/responseSisproind/estudiantesParaBusqueda')
         .set('accept', 'json')
         .end((err, res) => {
                 if (err) {
@@ -93,8 +92,7 @@ export default class AgregarAlumnoCurso extends Component {
 
         return new Promise ((resolve, reject) => {
             
-            request
-            .get('/responseSisproind/estudianteXcurso/'+this.props.curso.id)
+            getDb('/responseSisproind/estudianteXcurso/'+this.props.curso.id)
             .set('accept', 'json')
             .end((err, res) => {
                     if (err) {
@@ -120,6 +118,9 @@ export default class AgregarAlumnoCurso extends Component {
             open: true,
             busqueda: ""
         })
+        if (this.props.fun && this.props.fun.handleClickClose) {
+            this.props.fun.handleClickClose()
+        }
 
         Promise.all([ this.getEstudiantes() , this.getEstudiantesEnCurso() ]).then(() => {
 
@@ -177,8 +178,7 @@ export default class AgregarAlumnoCurso extends Component {
         
         nuevoMensaje(tiposAlertas.cargando, "Agregando alumno")
         
-        request
-        .post('/responseSisproind/AgregarAlumnoAcurso')
+        setDb('/responseSisproind/AgregarAlumnoAcurso')
         .send({idCurso: this.props.curso.id, idEstudiante: idEstudiante})
         .set('accept', 'json')
         .end((err, res) => {

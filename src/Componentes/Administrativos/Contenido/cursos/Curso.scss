@@ -1,12 +1,15 @@
 @import "../../../../Inicialized/variables.scss";
 
 .curso{
-    display: flex;
-    flex-direction: row;
-    border-radius: 1vw;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 12px;
+    border-radius: 12px;
     align-items: center;
-    background-color: $gray0;
-    margin-bottom: 0.5em;
+    background-color: #fff;
+    border: 1px solid $gray1;
+    padding: 10px 14px;
+    margin-bottom: 10px;
 
 }
 
@@ -23,35 +26,42 @@
     background-color: $cursando !important;
 }
 
-.Cerrado{
+.Finalizado{
     background-color: $primary !important;
 }
 
 
 .curso .idCurso{
     background-color: $primary;
-    height: 100%;
-    border-radius: 1vw;
-    display: flex;
+    border-radius: 10px;
+    display: inline-flex;
     align-items: center;
-    padding: 0 1em;
-    margin-right: 1em;
+    padding: 6px 10px;
     color: #000;
+    font-weight: 600;
 }
 
 .curso .nombre{
     flex: 1;
     height: fit-content;
+    color: $gray2;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .curso>.codMat{
     display: flex;
     align-items: center;
+    gap: 8px;
 
 }
 
 .codMat .estado{
-    margin-right: 1vw;
+    margin-right: 0;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: $gray0;
+    font-size: 0.9em;
 }
 
 .codMat>.codigo{

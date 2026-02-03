@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 import React, { Component } from 'react'
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora'
 import { zfill } from '../../../../Inicialized/FuncionesGlobales';
@@ -25,8 +25,7 @@ export default class CambiarEstadoCurso extends Component {
     }
 
     getTipoEstados() {
-        request
-            .get('/responseSisproind/tipoEstadosCurso')
+        getDb('/responseSisproind/tipoEstadosCurso')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -66,8 +65,7 @@ export default class CambiarEstadoCurso extends Component {
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/editarEstadoCurso')
+            setDb('/responseSisproind/editarEstadoCurso')
                 .send({ id: this.props.curso.id, estado: this.state.estado })
                 .set('accept', 'json')
                 .end((err, res) => {

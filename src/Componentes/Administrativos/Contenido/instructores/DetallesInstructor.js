@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import request from 'superagent'
+import { getDb } from '../../../../Inicialized/ApiDb';
 import Cargando from '../../../../Inicialized/Cargando'
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast'
+import { buildAssetsUrl, buildFirmaUrl } from '../../../../Inicialized/BackendConfig';
 
 export default class DetallesInstructor extends Component {
 
@@ -12,6 +13,7 @@ export default class DetallesInstructor extends Component {
             instructor: "",
             tiposDocumento: [],
             telefonos: [],
+            mostrarFirma: true,
         }
     }
 
@@ -24,8 +26,7 @@ export default class DetallesInstructor extends Component {
     }
 
     getInstructor() {
-        request
-            .get('/responseSisproind/instructorXid/' + this.props.idInstructor)
+        getDb('/responseSisproind/instructorXid/' + this.props.idInstructor)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -41,6 +42,7 @@ export default class DetallesInstructor extends Component {
                     } else {
                         this.setState({
                             instructor: respuestaLogin[0],
+                            mostrarFirma: true,
                         })
                     }
                 }
@@ -48,8 +50,7 @@ export default class DetallesInstructor extends Component {
     }
 
     getTipoDocumento() {
-        request
-            .get('/responseSisproind/tipoDocumento')
+        getDb('/responseSisproind/tipoDocumento')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -66,8 +67,7 @@ export default class DetallesInstructor extends Component {
     }
 
     getTelefonos() {
-        request
-            .get('/responseSisproind/telInstXid/' + this.props.idInstructor)
+        getDb('/responseSisproind/telInstXid/' + this.props.idInstructor)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -116,6 +116,15 @@ export default class DetallesInstructor extends Component {
         const instructor = this.state.instructor
 
         if (instructor != "") {
+            const firmaUrl = instructor.urlFirmaInstructor ? buildFirmaUrl(instructor.urlFirmaInstructor) : ""
+            const imagenPerfil = instructor.urlImage == "" ?
+                require("../../../../image/general/estudiantes.png") :
+                buildAssetsUrl(`/image/estudiantes/${instructor.urlImage}`)
+
+            if (firmaUrl) {
+                console.log("Firma instructor URL:", firmaUrl)
+            }
+
             return (
 
 
@@ -124,11 +133,7 @@ export default class DetallesInstructor extends Component {
 
                     <h3>Datos Personales</h3>
 
-                    {instructor.urlImage == "" ?
-                        <img src={require("../../../../image/general/estudiantes.png")} alt="" className="imagenPerfil" />
-                        :
-                        <img src={"http://www.sisproind.com/plataforma/image/estudiantes/" + instructor.urlImage} alt="" />
-                    }
+                    <img src={imagenPerfil} alt="" className="imagenPerfil" />
 
                     <span><strong>Tipo documento: </strong> {this.renderTipoDocumento(instructor.tipoDoc)} </span>
                     <span><strong>Documento: </strong> {instructor.id} </span>
@@ -139,6 +144,21 @@ export default class DetallesInstructor extends Component {
 
                     <br />
 
+                    <h3>Firma</h3>
+                    {this.state.mostrarFirma && firmaUrl !== "" ? (
+                        <div style={{ width: '220px', height: '140px', borderRadius: '12px', border: '1px solid #ddd', overflow: 'hidden', background: '#fafafa' }}>
+                            <img
+                                src={firmaUrl}
+                                alt="Firma instructor"
+                                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                onError={() => this.setState({ mostrarFirma: false })}
+                            />
+                        </div>
+                    ) : (
+                        <span>No hay firma registrada</span>
+                    )}
+
+                    <br />
 
                     <h3>Cursos Activos</h3>
                     <br />

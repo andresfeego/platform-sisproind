@@ -3,7 +3,7 @@ import "./Estudiantes.scss"
 import "./Estudiantes_mobile.scss"
 import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 import AgregarEstudiante from './AgregarEstudiante';
-import request from 'superagent';
+import { getDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import DetalleEstudiante from './DetalleEstudiante';
 import Estudiante from './Estudiante';
@@ -40,8 +40,7 @@ export default class Estudiantes extends Component {
 
     getEstudiantes() {
 
-        request
-            .get('/responseSisproind/estudiantes')
+        getDb('/responseSisproind/estudiantes')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

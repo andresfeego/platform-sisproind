@@ -2,11 +2,12 @@ import React from 'react';
 import './App.scss';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Header from './COMPONENTES/Header'
-import VentanaAdministrativos from './COMPONENTES/Administrativos/VentanaAdministrativos';
-import VentanaCertificados from './COMPONENTES/Certificados/VentanaCertificados';
-import VentanaMatriculas from './COMPONENTES/Administrativos/Contenido/estudiantes/VentanaMatriculas';
-import BarraUsuario from './COMPONENTES/Administrativos/Contenido/Usuario/BarraUsuario';
+import Header from './Componentes/Header'
+import VentanaAdministrativos from './Componentes/Administrativos/VentanaAdministrativos';
+import VentanaCertificados from './Componentes/Certificados/VentanaCertificados';
+import VerificarDiploma from './Componentes/Certificados/VerificarDiploma';
+import VentanaMatriculas from './Componentes/Administrativos/Contenido/estudiantes/VentanaMatriculas';
+import BarraUsuario from './Componentes/Administrativos/Contenido/Usuario/BarraUsuario';
 
 function irAweb(){
   window.open("https://sisproind.com/web", "_self")
@@ -23,6 +24,7 @@ function App() {
         </Route>
       </Switch>
         <Route  path="/:idSeccion" component={Header}/>
+        <Route exact path="/verificar_certificados" component={VerificarDiploma}/>
         <Route  path="/administrativos" component={BarraUsuario}/>
         <Route  path="/administrativos" component={VentanaAdministrativos}/>
         <Route  path="/certificados" component={VentanaCertificados}/>

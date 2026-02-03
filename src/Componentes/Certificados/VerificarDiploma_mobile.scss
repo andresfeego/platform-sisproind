@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+  .VerificarDiploma {
+    padding: 20px 14px 40px;
+  }
+
+  .VerificarDiploma .panel {
+    padding: 20px;
+  }
+
+  .VerificarDiploma .titulo {
+    font-size: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .VerificarDiploma .row {
+    grid-template-columns: 1fr;
+  }
+}

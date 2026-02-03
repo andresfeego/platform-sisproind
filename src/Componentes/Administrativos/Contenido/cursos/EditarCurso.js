@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import React, { Component } from 'react'
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -27,6 +27,10 @@ export default class EditarCurso extends Component {
             fechaCierre: new Date(curso.fechaCierre),
             horasTeoria: curso.horasTeoria,
             horasPractica: curso.horasPractica,
+            empresa: curso.empresa || "",
+            nit: curso.nit || "",
+            rl: curso.rl || "",
+            arl: curso.arl || "",
 
             numeroHoras: curso.horas,
             tiposTemas: [],
@@ -45,8 +49,7 @@ export default class EditarCurso extends Component {
     }
 
     getTipoEstados() {
-        request
-            .get('/responseSisproind/tipoEstadosCurso')
+        getDb('/responseSisproind/tipoEstadosCurso')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -63,8 +66,7 @@ export default class EditarCurso extends Component {
     }
 
     getTipoTemas() {
-        request
-            .get('/responseSisproind/tipoTemas')
+        getDb('/responseSisproind/tipoTemas')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -81,8 +83,7 @@ export default class EditarCurso extends Component {
     }
 
     getInstructores() {
-        request
-            .get('/responseSisproind/instructores')
+        getDb('/responseSisproind/instructores')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -99,8 +100,7 @@ export default class EditarCurso extends Component {
     }
 
     getTipoLineas(tema) {
-        request
-            .get('/responseSisproind/tipoLineas/' + tema)
+        getDb('/responseSisproind/tipoLineas/' + tema)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -130,9 +130,16 @@ export default class EditarCurso extends Component {
             fechaCierre: new Date(curso.fechaCierre),
             horasTeoria: curso.horasTeoria,
             horasPractica: curso.horasPractica,
+            empresa: curso.empresa || "",
+            nit: curso.nit || "",
+            rl: curso.rl || "",
+            arl: curso.arl || "",
 
             numeroHoras: curso.horas,
         })
+        if (this.props.fun && this.props.fun.handleClickClose) {
+            this.props.fun.handleClickClose()
+        }
         this.getTipoLineas(this.props.curso.idTema)
 
     };
@@ -149,6 +156,10 @@ export default class EditarCurso extends Component {
             fechaCierre: new Date(),
             horasTeoria: 0,
             horasPractica: 0,
+            empresa: "",
+            nit: "",
+            rl: "",
+            arl: "",
             numeroHoras: 0,
 
 
@@ -207,12 +218,32 @@ export default class EditarCurso extends Component {
         })
     };
 
+    formatDate = (date) => {
+        if (!date) return ""
+        const d = new Date(date)
+        const y = d.getFullYear()
+        const m = String(d.getMonth() + 1).padStart(2, "0")
+        const day = String(d.getDate()).padStart(2, "0")
+        return `${y}-${m}-${day}`
+    }
+
+    formatDateTime = (date) => {
+        if (!date) return ""
+        const d = new Date(date)
+        const y = d.getFullYear()
+        const m = String(d.getMonth() + 1).padStart(2, "0")
+        const day = String(d.getDate()).padStart(2, "0")
+        const hh = String(d.getHours()).padStart(2, "0")
+        const mm = String(d.getMinutes()).padStart(2, "0")
+        const ss = String(d.getSeconds()).padStart(2, "0")
+        return `${y}-${m}-${day} ${hh}:${mm}:${ss}`
+    }
+
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/editarCurso')
-                .send({ id: this.state.id, linea: this.state.linea, instructor: this.state.instructor, estado: this.state.estado, fechaCreacion: this.state.fechaCreacion, fechaInicio: this.state.fechaInicio, fechaCierre: this.state.fechaCierre, horasTeoria: this.state.horasTeoria, horasPractica: this.state.horasPractica, })
+            setDb('/responseSisproind/editarCurso')
+                .send({ id: this.state.id, linea: this.state.linea, instructor: this.state.instructor, estado: this.state.estado, fechaCreacion: this.formatDateTime(this.state.fechaCreacion), fechaInicio: this.formatDate(this.state.fechaInicio), fechaCierre: this.formatDate(this.state.fechaCierre), horasTeoria: this.state.horasTeoria, horasPractica: this.state.horasPractica, empresa: this.state.empresa, nit: this.state.nit, rl: this.state.rl, arl: this.state.arl })
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -295,7 +326,7 @@ export default class EditarCurso extends Component {
                 >
                     <DialogTitle id="max-width-dialog-title"><div className="tituloAgregarActividad">Nuevo Curso</div></DialogTitle>
                     <DialogContent>
-                        <div className="formularioUniStep">
+                        <div className="formularioUniStep cursoModal">
                             <form noValidate>
 
                                 <FormControl >
@@ -380,6 +411,10 @@ export default class EditarCurso extends Component {
                                             <Input className="inputform" type="text" placeholder="Número de horas teoria" value={this.state.horasTeoria} name="horasTeoria" onChange={this.onChange} />
                                             <Input className="inputform" type="text" placeholder="Número de horas practica" value={this.state.horasPractica} name="horasPractica" onChange={this.onChange} />
 
+                                            <Input className="inputform" type="text" placeholder="Empresa" value={this.state.empresa} name="empresa" onChange={this.onChange} />
+                                            <Input className="inputform" type="text" placeholder="NIT" value={this.state.nit} name="nit" onChange={this.onChange} />
+                                            <Input className="inputform" type="text" placeholder="R.L" value={this.state.rl} name="rl" onChange={this.onChange} />
+                                            <Input className="inputform" type="text" placeholder="ARL" value={this.state.arl} name="arl" onChange={this.onChange} />
 
                                         </Grid>
                                     </MuiPickersUtilsProvider>

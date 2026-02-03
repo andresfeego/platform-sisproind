@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import request from 'superagent'
+import { getDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast'
 import Cargando from '../../../../Inicialized/Cargando'
 import Estudiante from './Estudiante'
@@ -20,8 +20,7 @@ export default class ListadoEstudiantes extends Component {
 
     getEstudiantes() {
 
-        request
-            .get('/responseSisproind/estudiantes')
+        getDb('/responseSisproind/estudiantes')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

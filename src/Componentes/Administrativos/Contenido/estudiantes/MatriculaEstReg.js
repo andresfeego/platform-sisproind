@@ -1,6 +1,6 @@
 import { Input } from '@material-ui/core';
 import React, { Component } from 'react'
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import Matriculado from './Matriculado';
@@ -33,8 +33,7 @@ export default class MatriculaEstReg extends Component {
     consultar() {
         return new Promise((resolve, reject) => {
 
-            request
-                .get('/responseSisproind/consultarMatriculaCurso/' + this.state.codigoTemp)
+            getDb('/responseSisproind/consultarMatriculaCurso/' + this.state.codigoTemp)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -63,8 +62,7 @@ export default class MatriculaEstReg extends Component {
 
     validarUsuarioExistente() {
         return new Promise((resolve, reject) => {
-            request
-                .get('/responseSisproind/estudianteExiste/' + this.state.cedula)
+            getDb('/responseSisproind/estudianteExiste/' + this.state.cedula)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -94,8 +92,7 @@ export default class MatriculaEstReg extends Component {
     validarUsuarioMatricula(curso, estudiante) {
         return new Promise((resolve, reject) => {
 
-            request
-                .post('/responseSisproind/validarEstParaMatricula')
+            setDb('/responseSisproind/validarEstParaMatricula')
                 .send({ idEstudiante: estudiante.id, idCurso: curso.id })
                 .set('accept', 'json')
                 .end((err, res) => {
@@ -119,8 +116,7 @@ export default class MatriculaEstReg extends Component {
     matricular(curso, estudiante) {
         return new Promise((resolve, reject) => {
 
-            request
-                .post('/responseSisproind/matricula')
+            setDb('/responseSisproind/matricula')
                 .send({ idCurso: curso.id, idEstudiante: estudiante.id })
                 .set('accept', 'json')
                 .end((err, res) => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Input } from '@material-ui/core';
 import { tiposAlertas, nuevoMensaje } from "../../Inicialized/Toast";
-import request from 'superagent';
+import { setDb } from '../../Inicialized/ApiDb';
 import { connect } from 'react-redux';
 import { saveUsuario } from '../../Inicialized/Actions';
 import { agregarEventoBitacora } from '../../Inicialized/Bitacora';
@@ -27,8 +27,7 @@ class CambioPass extends Component {
     }
 
     guardarSesion(usuario) {
-        request
-            .post('/responseSisproind/guardarSesion')
+        setDb('/responseSisproind/guardarSesion')
             .send({ pass: this.state.password1, id: usuario.id })
             .set('accept', 'json')
             .end((err, res) => {
@@ -43,8 +42,7 @@ class CambioPass extends Component {
 
 
     cambiarContrasena() {
-        request
-            .post('/responseSisproind/usuarioSistema/cambiarContrasena')
+        setDb('/responseSisproind/usuarioSistema/cambiarContrasena')
             .send({ pass: this.state.password1, id: this.props.usuario.id })
             .set('accept', 'json')
             .end((err, res) => {

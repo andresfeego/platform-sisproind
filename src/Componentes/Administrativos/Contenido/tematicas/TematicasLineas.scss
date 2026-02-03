@@ -1,0 +1,199 @@
+.tematicasAdmin {
+    padding: 10px;
+}
+
+.tematicas-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.panel-temas, .panel-lineas {
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.panel-header {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.panel-header h1 {
+    margin: 0;
+    padding-right: 140px;
+}
+
+.panel-header .btn-secundario {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.form-tema, .form-linea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.form-tema .descripcionTema {
+    grid-column: 1 / -1;
+}
+
+.fondo-diploma {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 8px;
+}
+
+.fondo-diploma .label {
+    font-size: 13px;
+    color: #444;
+}
+
+.fondo-diploma .preview {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 8px;
+    background: #fafafa;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fondo-diploma .preview img,
+.detalleBody .preview img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: contain;
+}
+
+.fondo-diploma .preview.vacio {
+    color: #777;
+    font-size: 12px;
+}
+
+.form-linea {
+    grid-template-columns: 2fr 1fr;
+}
+
+.acciones {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primario {
+    background: #3f51b5;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-secundario {
+    background: #f2f2f2;
+    border: 1px solid #d0d0d0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-peligro {
+    background: #fbe9e7;
+    border: 1px solid #ffab91;
+    color: #d84315;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.lista-temas, .lista-lineas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tema-row, .linea-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.tema-row.activa {
+    border-color: #3f51b5;
+    background: #f0f3ff;
+}
+
+.tema-info, .linea-info {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tema-actions, .linea-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.tema-sigla, .linea-horas {
+    font-size: 12px;
+    color: #666;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modalCard {
+    background: #fff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 520px;
+    padding: 16px;
+    border: 1px solid #e1e1e1;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.modalHeader h2 {
+    margin: 0;
+}
+
+.detalleBody {
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.detalleTexto {
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 8px;
+    background: #fafafa;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+    .tematicas-layout {
+        grid-template-columns: 1fr;
+    }
+}

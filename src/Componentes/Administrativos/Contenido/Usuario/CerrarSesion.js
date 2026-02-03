@@ -1,7 +1,7 @@
 import { MenuItem } from '@material-ui/core';
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import request from 'superagent';
+import { getDb } from '../../../../Inicialized/ApiDb';
 import { clearUsuario } from '../../../../Inicialized/Actions';
 
 class CerrarSesion extends Component {
@@ -9,8 +9,7 @@ class CerrarSesion extends Component {
 
     cerrarSesion() {
         this.props.clearUsuario()
-        request
-            .get('/responseSisproind/cerrarSesion')
+        getDb('/responseSisproind/cerrarSesion')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

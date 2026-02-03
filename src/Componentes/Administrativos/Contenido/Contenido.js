@@ -5,6 +5,7 @@ import Estudiantes from './estudiantes/Estudiantes'
 import Instructores from './instructores/Instructores'
 import Cursos from './cursos/Cursos'
 import Bitacora from './bitacora/Bitacora'
+import TematicasLineas from './tematicas/TematicasLineas'
 
 
 export default class Contenido extends Component {
@@ -52,6 +53,10 @@ export default class Contenido extends Component {
 
             case 5:
                 return <Bitacora fun={this} />
+                break;
+
+            case 6:
+                return <TematicasLineas fun={this} />
                 break;
 
             default:

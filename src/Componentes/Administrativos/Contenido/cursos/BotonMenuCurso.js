@@ -19,14 +19,14 @@ export default class BotonMenuCurso extends Component {
 
     handleClickOpen = (event) => {
         this.setState({
-            open: !this.state.open,
+            open: true,
             setAnchorEl: event.currentTarget
         })
     };
 
     handleClickClose = () => {
         this.setState({
-            open: !this.state.open,
+            open: false,
             setAnchorEl: null
         })
     };
@@ -48,7 +48,7 @@ export default class BotonMenuCurso extends Component {
                     anchorEl={this.state.setAnchorEl}
                     keepMounted
                     open={this.state.open}
-                    onClose={this.handleClickOpen}
+                    onClose={this.handleClickClose}
                 >
 
                     <MenuItem onClick={() => this.verDetalles(this.props.curso)} >Detalles</MenuItem>

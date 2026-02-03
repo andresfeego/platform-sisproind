@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
-import request from 'superagent'
+import { getDb } from '../../Inicialized/ApiDb';
 import Cargando from '../../Inicialized/Cargando'
 import { nuevoMensaje, tiposAlertas } from '../../Inicialized/Toast'
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import BookIcon from '@material-ui/icons/Book';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import SchoolIcon from '@material-ui/icons/School';
 import "./ListadoCertificados.scss"
 import "./ListadoCertificados_mobile.scss"
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -51,8 +56,7 @@ export default class ListadoCertificados extends Component {
 
     
     getListado(){
-        request
-        .get('/responseSisproind/certificadosCursos/'+this.state.estudiante.id)
+        getDb('/responseSisproind/certificadosCursos/'+this.state.estudiante.id)
         .set('accept', 'json')
         .end((err, res) => {
                 if (err) {
@@ -72,7 +76,13 @@ export default class ListadoCertificados extends Component {
 
     verCertificado(curso){
         agregarEventoBitacora(26, "id estudiante: " + curso.idEstudiante + " - id curso: " + zfill(curso.idCurso, 3), 0)
-        this.props.fun.setCurso(curso)
+        this.props.fun.setCurso({ ...curso, tipoPdf: 'certificado' })
+        this.props.fun.cambiarEstado(3)
+    }
+
+    verDiploma(curso){
+        agregarEventoBitacora(26, "id estudiante: " + curso.idEstudiante + " - id curso: " + zfill(curso.idCurso, 3) + " - diploma", 0)
+        this.props.fun.setCurso({ ...curso, tipoPdf: 'diploma' })
         this.props.fun.cambiarEstado(3)
     }
 
@@ -87,6 +97,8 @@ export default class ListadoCertificados extends Component {
                     <PDFDownloadLink className="certificadoMobile"
                         document={<PDFDoc curso={ cursoA }/>}
                         fileName="certificado.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
                             textDecoration: "none",
                             padding: "10px",
@@ -102,7 +114,47 @@ export default class ListadoCertificados extends Component {
                 ]
             )
         }
+
+    renderIconoDiploma(cursoA){
+        if (cursoA.graduado != 1) {
+            return null
+        }
+
+        return (
+            [
+                <span className="descargarDiploma" onClick={() => this.verDiploma(cursoA)}>
+                    <span className="diplomaIcon">
+                        <SchoolIcon />
+                        <span>Diploma</span>
+                    </span>
+                </span>
+            ]
+        )
+    }
     
+    renderEstadoCurso(item){
+        let IconoEstado = AddCircleOutlineIcon
+        let textoEstado = item.nombreEstado || ''
+
+        if (item.estado == 2) {
+            IconoEstado = GroupAddIcon
+        } else if (item.estado == 3) {
+            IconoEstado = PlayCircleOutlineIcon
+        } else if (item.estado == 4) {
+            IconoEstado = CheckCircleOutlineIcon
+        }
+
+        return (
+            <span className="estadoCur">
+                <BootstrapTooltip title={textoEstado}>
+                    <span className="estadoIcon">
+                        <IconoEstado />
+                    </span>
+                </BootstrapTooltip>
+                <span className="estadoLabel">{textoEstado}</span>
+            </span>
+        )
+    }
 
     renderListado(){
         if (this.state.listado == null) {
@@ -122,16 +174,24 @@ export default class ListadoCertificados extends Component {
                         
                         {item.graduado == 0 ?
                             <span className="graduado">
-                                <AssignmentLateIcon className="iconoNoGraduado"/>
-                                <span>No graduado</span>
+                                <BootstrapTooltip title="No graduado">
+                                    <span className="estadoIcon">
+                                        <AssignmentLateIcon className="iconoNoGraduado"/>
+                                    </span>
+                                </BootstrapTooltip>
+                                <span className="estadoLabel">No graduado</span>
                             </span>
                             :
                             <span className="graduado">
-                                <BookIcon className="iconoGraduado" />
-                                <span>Graduado</span>
+                                <BootstrapTooltip title="Graduado">
+                                    <span className="estadoIcon">
+                                        <BookIcon className="iconoGraduado" />
+                                    </span>
+                                </BootstrapTooltip>
+                                <span className="estadoLabel">Graduado</span>
                             </span>
                         }
-                        <span className="estadoCur">{ item.nombreEstado } </span>
+                        {this.renderEstadoCurso(item)}
                         {item.estado == 4 && item.graduado == 1? 
                             
                             this.renderIconoDescarga(item)
@@ -140,6 +200,8 @@ export default class ListadoCertificados extends Component {
                                 <span>El curso debe ser finalizado para descargar la constacia de estudio</span>
                             </BootstrapTooltip>
                             }
+
+                        {this.renderIconoDiploma(item)}
 
                             {item.idTema == 8 & item.graduado == 1 && item.estado == 4 ? 
                                 <a href="https://app2.mintrabajo.gov.co/CentrosEntrenamiento/consulta_ext.aspx" target="_blank"> Verificar oficialmente</a>
@@ -158,7 +220,21 @@ export default class ListadoCertificados extends Component {
         const estudiante = this.state.estudiante
         return (
             <div className="listadoCertificados">
-                <h2>{"Listado de certificados para "} <br/> { estudiante.nombres + " " + estudiante.apellidos }</h2>
+                <div className="tituloCertificados">
+                    <div className="tituloTexto">
+                        <span className="tituloLabel">Listado de certificados</span>
+                        <span className="tituloNombre">{estudiante.nombres + " " + estudiante.apellidos}</span>
+                    </div>
+                    <button
+                        className="btnCambiarPersona"
+                        onClick={() => {
+                            this.props.fun.setEstudiante("")
+                            this.props.fun.cambiarEstado(1)
+                        }}
+                    >
+                        Cambiar persona
+                    </button>
+                </div>
                 <div className="listado">
                     {this.renderListado()}
                 </div>

@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Input, MenuItem } from '@material-ui/core';
 import React, { Component } from 'react'
-import request from 'superagent';
+import { setDb } from '../../../../Inicialized/ApiDb';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 
@@ -73,8 +73,7 @@ export default class CambiarPass extends Component {
     }
 
     guardarSesion(usuario) {
-        request
-            .post('/responseSisproind/guardarSesion')
+        setDb('/responseSisproind/guardarSesion')
             .send({ pass: this.state.password1, id: usuario.id })
             .set('accept', 'json')
             .end((err, res) => {
@@ -90,8 +89,7 @@ export default class CambiarPass extends Component {
 
     cambiarContrasena() {
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/usuarioSistema/cambiarContrasena')
+            setDb('/responseSisproind/usuarioSistema/cambiarContrasena')
                 .send({ pass: this.state.password1, id: this.props.usuario.id })
                 .set('accept', 'json')
                 .end((err, res) => {

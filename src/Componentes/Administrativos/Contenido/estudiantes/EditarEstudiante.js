@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React, { Component } from 'react'
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
@@ -32,8 +32,7 @@ export default class EditarEstudiante extends Component {
     }
 
     getTipoDocumento() {
-        request
-            .get('/responseSisproind/tipoDocumento')
+        getDb('/responseSisproind/tipoDocumento')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -50,8 +49,7 @@ export default class EditarEstudiante extends Component {
     }
 
     getTelefonosEstudiante() {
-        request
-            .get('/responseSisproind/telEstXid/' + this.props.estudiante.id)
+        getDb('/responseSisproind/telEstXid/' + this.props.estudiante.id)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -106,8 +104,7 @@ export default class EditarEstudiante extends Component {
 
     eliminarTelefono(idTelefono) {
         nuevoMensaje(tiposAlertas.cargando, "Eliminando telefono")
-        request
-            .post('/responseSisproind/eliminarTelEstudiante')
+        setDb('/responseSisproind/eliminarTelEstudiante')
             .send({ idTelefono: idTelefono })
             .set('accept', 'json')
             .end((err, res) => {
@@ -127,8 +124,7 @@ export default class EditarEstudiante extends Component {
 
     guardarTelefono() {
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/agregarTelEstudiante')
+            setDb('/responseSisproind/agregarTelEstudiante')
                 .send({ idEstudiante: this.state.cedula, telefono: this.state.auxiTelefono })
                 .set('accept', 'json')
                 .end((err, res) => {
@@ -211,8 +207,7 @@ export default class EditarEstudiante extends Component {
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/editarEstudiante')
+            setDb('/responseSisproind/editarEstudiante')
                 .send({ idEstudiante: this.state.cedula, tipoDoc: this.state.tipoDocumento, nombres: this.state.nombres, apellidos: this.state.apellidos, email: this.state.email })
                 .set('accept', 'json')
                 .end((err, res) => {

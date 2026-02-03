@@ -2,7 +2,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormCon
 import React, { Component } from 'react'
 import "./AgregarEstudiante.scss"
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
@@ -32,8 +32,7 @@ export default class AgregarEstudiante extends Component {
     }
 
     getTipoDocumento() {
-        request
-            .get('/responseSisproind/tipoDocumento')
+        getDb('/responseSisproind/tipoDocumento')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -104,8 +103,7 @@ export default class AgregarEstudiante extends Component {
 
     validarUsuarioExistente() {
         return new Promise((resolve, reject) => {
-            request
-                .get('/responseSisproind/estudianteExiste/' + this.state.cedula)
+            getDb('/responseSisproind/estudianteExiste/' + this.state.cedula)
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -180,8 +178,7 @@ export default class AgregarEstudiante extends Component {
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/crearEstudiante')
+            setDb('/responseSisproind/crearEstudiante')
                 .send({ id: this.state.cedula, tipoDoc: this.state.tipoDocumento, nombres: this.state.nombres, apellidos: this.state.apellidos, email: this.state.email, telefonos: this.state.telefonos })
                 .set('accept', 'json')
                 .end((err, res) => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import "./DetalleEstudiante.scss"
 import "./DetalleEstudiante_mobile.scss"
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
@@ -32,8 +32,7 @@ export default class DetalleEstudiante extends Component {
     }
 
     getEstudiante() {
-        request
-            .get('/responseSisproind/estudianteXid/' + this.props.idEstudiante)
+        getDb('/responseSisproind/estudianteXid/' + this.props.idEstudiante)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -56,8 +55,7 @@ export default class DetalleEstudiante extends Component {
     }
 
     getTipoDocumento() {
-        request
-            .get('/responseSisproind/tipoDocumento')
+        getDb('/responseSisproind/tipoDocumento')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -74,8 +72,7 @@ export default class DetalleEstudiante extends Component {
     }
 
     getTelefonos() {
-        request
-            .get('/responseSisproind/telEstXid/' + this.props.idEstudiante)
+        getDb('/responseSisproind/telEstXid/' + this.props.idEstudiante)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -134,8 +131,7 @@ export default class DetalleEstudiante extends Component {
             labelActivar = "Desactivar "
         }
 
-        request
-            .post('/responseSisproind/actDesEstu')
+        setDb('/responseSisproind/actDesEstu')
             .set('accept', 'json')
             .send({ accion: accion, id: estudiante.id })
             .end((err, res) => {

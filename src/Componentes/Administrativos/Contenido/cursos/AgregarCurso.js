@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import React, { Component } from 'react'
 import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
-import request from 'superagent';
+import { getDb, setDb } from '../../../../Inicialized/ApiDb';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -26,6 +26,10 @@ export default class AgregarCurso extends Component {
             fechaCierre: new Date(),
             horasTeoria: 0,
             horasPractica: 0,
+            empresa: "",
+            nit: "",
+            rl: "",
+            arl: "",
 
             numeroHoras: 0,
             tiposTemas: [],
@@ -41,8 +45,7 @@ export default class AgregarCurso extends Component {
     }
 
     getTipoTemas() {
-        request
-            .get('/responseSisproind/tipoTemas')
+        getDb('/responseSisproind/tipoTemas')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -59,8 +62,7 @@ export default class AgregarCurso extends Component {
     }
 
     getInstructores() {
-        request
-            .get('/responseSisproind/instructores')
+        getDb('/responseSisproind/instructores')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -77,8 +79,7 @@ export default class AgregarCurso extends Component {
     }
 
     getTipoLineas(tema) {
-        request
-            .get('/responseSisproind/tipoLineas/' + tema)
+        getDb('/responseSisproind/tipoLineas/' + tema)
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {
@@ -113,6 +114,10 @@ export default class AgregarCurso extends Component {
             horasTeoria: 0,
             horasPractica: 0,
             numeroHoras: 0,
+            empresa: "",
+            nit: "",
+            rl: "",
+            arl: "",
 
 
             tiposLineas: []
@@ -170,12 +175,32 @@ export default class AgregarCurso extends Component {
         })
     };
 
+    formatDate = (date) => {
+        if (!date) return ""
+        const d = new Date(date)
+        const y = d.getFullYear()
+        const m = String(d.getMonth() + 1).padStart(2, "0")
+        const day = String(d.getDate()).padStart(2, "0")
+        return `${y}-${m}-${day}`
+    }
+
+    formatDateTime = (date) => {
+        if (!date) return ""
+        const d = new Date(date)
+        const y = d.getFullYear()
+        const m = String(d.getMonth() + 1).padStart(2, "0")
+        const day = String(d.getDate()).padStart(2, "0")
+        const hh = String(d.getHours()).padStart(2, "0")
+        const mm = String(d.getMinutes()).padStart(2, "0")
+        const ss = String(d.getSeconds()).padStart(2, "0")
+        return `${y}-${m}-${day} ${hh}:${mm}:${ss}`
+    }
+
     guardar() {
 
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/crearCurso')
-                .send({ linea: this.state.linea, instructor: this.state.instructor, fechaCreacion: this.state.fechaCreacion, fechaInicio: this.state.fechaInicio, fechaCierre: this.state.fechaCierre, horasTeoria: this.state.horasTeoria, horasPractica: this.state.horasPractica, })
+            setDb('/responseSisproind/crearCurso')
+                .send({ linea: this.state.linea, instructor: this.state.instructor, fechaCreacion: this.formatDateTime(this.state.fechaCreacion), fechaInicio: this.formatDate(this.state.fechaInicio), fechaCierre: this.formatDate(this.state.fechaCierre), horasTeoria: this.state.horasTeoria, horasPractica: this.state.horasPractica, empresa: this.state.empresa, nit: this.state.nit, rl: this.state.rl, arl: this.state.arl })
                 .set('accept', 'json')
                 .end((err, res) => {
                     if (err) {
@@ -252,7 +277,7 @@ export default class AgregarCurso extends Component {
                 >
                     <DialogTitle id="max-width-dialog-title"><div className="tituloAgregarActividad">Nuevo Curso</div></DialogTitle>
                     <DialogContent>
-                        <div className="formularioUniStep">
+                        <div className="formularioUniStep cursoModal">
                             <form noValidate>
 
                                 <FormControl >
@@ -347,6 +372,26 @@ export default class AgregarCurso extends Component {
                                 <FormControl >
                                     <InputLabel htmlFor="max-width">Horas practicas</InputLabel>
                                     <Input className="inputform" type="text" placeholder="Número de horas practica" value={this.state.horasPractica} name="horasPractica" onChange={this.onChange} />
+                                </FormControl>
+
+                                <FormControl >
+                                    <InputLabel htmlFor="max-width">Empresa</InputLabel>
+                                    <Input className="inputform" type="text" placeholder="Empresa" value={this.state.empresa} name="empresa" onChange={this.onChange} />
+                                </FormControl>
+
+                                <FormControl >
+                                    <InputLabel htmlFor="max-width">NIT</InputLabel>
+                                    <Input className="inputform" type="text" placeholder="NIT" value={this.state.nit} name="nit" onChange={this.onChange} />
+                                </FormControl>
+
+                                <FormControl >
+                                    <InputLabel htmlFor="max-width">R.L</InputLabel>
+                                    <Input className="inputform" type="text" placeholder="R.L" value={this.state.rl} name="rl" onChange={this.onChange} />
+                                </FormControl>
+
+                                <FormControl >
+                                    <InputLabel htmlFor="max-width">ARL</InputLabel>
+                                    <Input className="inputform" type="text" placeholder="ARL" value={this.state.arl} name="arl" onChange={this.onChange} />
                                 </FormControl>
 
                             </form>

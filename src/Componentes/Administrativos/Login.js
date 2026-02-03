@@ -3,7 +3,7 @@ import "./Login.scss"
 import "./Login_mobile.scss"
 import { Input } from '@material-ui/core';
 import { tiposAlertas, nuevoMensaje } from "../../Inicialized/Toast";
-import request from 'superagent';
+import { getDb, setDb } from '../../Inicialized/ApiDb';
 import { connect } from 'react-redux';
 import { saveUsuario } from '../../Inicialized/Actions';
 import { agregarEventoBitacora } from '../../Inicialized/Bitacora';
@@ -21,8 +21,7 @@ class Login extends Component {
     }
 
     guardarSesion(usuario) {
-        request
-            .post('/responseSisproind/guardarSesion')
+        setDb('/responseSisproind/guardarSesion')
             .send({ pass: this.state.password, id: usuario.id })
             .set('accept', 'json')
             .end((err, res) => {
@@ -37,8 +36,7 @@ class Login extends Component {
 
     login() {
         nuevoMensaje(tiposAlertas.cargando, "Validando...");
-        request
-            .get('/responseSisproind/usuariosSistema/' + this.state.id)
+        getDb('/responseSisproind/usuariosSistema/' + this.state.id)
             .set('accept', 'json')
             .end((err, res) => {
 

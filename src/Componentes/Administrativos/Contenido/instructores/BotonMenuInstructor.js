@@ -1,7 +1,7 @@
 import { Box, Menu, MenuItem } from '@material-ui/core';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import React, { Component } from 'react'
-import request from 'superagent';
+import { setDb } from '../../../../Inicialized/ApiDb';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import EditarInstructor from './EditarInstructor';
@@ -48,8 +48,7 @@ export default class BotonMenuInstructor extends Component {
             labelActivar = "Desactivar "
         }
 
-        request
-            .post('/responseSisproind/actDesInst')
+        setDb('/responseSisproind/actDesInst')
             .set('accept', 'json')
             .send({ accion: accion, id: instructor.id })
             .end((err, res) => {

@@ -3,19 +3,25 @@
 @media screen and (max-width: 767px) {
 
     .curso{
-        display: flex;
-        flex-direction: row;
-        border-radius: 1vw;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-auto-rows: min-content;
+        gap: 8px;
+        border-radius: 14px;
         align-items: center;
-        background-color: $gray0;
-        margin-bottom: 0.5em;
+        background-color: #fff;
+        margin-bottom: 12px;
         position: relative;
         overflow: hidden;
+        border: 1px solid $gray1;
+        padding: 10px 12px;
     
     }
 .curso .idCurso{
     align-self: flex-start;
     font-size: 3vw;
+    padding: 6px 10px;
+    border-radius: 10px;
 }
 
 
@@ -23,6 +29,7 @@
     flex: 1;
     font-size: 3.5vw;
     height: fit-content;
+    grid-column: 1 / -1;
 }
 
 
@@ -32,7 +39,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 2vw 6vw 2vw 2vw;
+    margin: 0;
     font-size: 3vw;
 }
 

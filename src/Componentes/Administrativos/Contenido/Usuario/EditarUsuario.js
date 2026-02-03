@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Input, MenuItem } from '@material-ui/core';
 import React, { Component } from 'react'
-import request from 'superagent';
+import { setDb } from '../../../../Inicialized/ApiDb';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
 import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import { connect } from 'react-redux'
@@ -74,8 +74,7 @@ class EditarUsuario extends Component {
 
     editarUsuario() {
         return new Promise((resolve, reject) => {
-            request
-                .post('/responseSisproind/usuarioSistema/editarUsuario')
+            setDb('/responseSisproind/usuarioSistema/editarUsuario')
                 .send({ id: this.props.usuario.id, nombre: this.state.nombres, apellido: this.state.apellidos, email: this.state.correo })
                 .set('accept', 'json')
                 .end((err, res) => {

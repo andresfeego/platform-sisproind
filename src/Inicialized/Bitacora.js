@@ -1,4 +1,4 @@
-import request from 'superagent';
+import { setDb } from './ApiDb';
 import store from './localStore.js';
 
 export function agregarEventoBitacora(idTipoEvento, descripcion, idUsuarioSistema){
@@ -7,8 +7,7 @@ export function agregarEventoBitacora(idTipoEvento, descripcion, idUsuarioSistem
         idUsuarioSistema = store.getState().usuario.id
     }
 
-    request
-                .post('/responseSisproind/agregarEventoBitacora')
+    setDb('/responseSisproind/agregarEventoBitacora')
                 .send({idTipoEvento: idTipoEvento, descripcion: descripcion, idUsuarioSistema: idUsuarioSistema})
                 .set('accept', 'json')
                 .end((err, res) => {
@@ -20,6 +19,5 @@ export function agregarEventoBitacora(idTipoEvento, descripcion, idUsuarioSistem
                         }
                 });
 }
-
 
 

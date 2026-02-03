@@ -4,7 +4,7 @@ import Login from './Login'
 import CambioPass from './CambioPass'
 import Contenido from './Contenido/Contenido'
 import { saveUsuario } from '../../Inicialized/Actions';
-import request from 'superagent';
+import { getDb } from '../../Inicialized/ApiDb';
 import Cargando from '../../Inicialized/Cargando';
 import { nuevoMensaje, tiposAlertas } from '../../Inicialized/Toast';
 
@@ -23,8 +23,7 @@ class VentanaAdministrativos extends Component {
     }
 
     getSesion() {
-        request
-            .get('/responseSisproind/getSession')
+        getDb('/responseSisproind/getSession')
             .set('accept', 'json')
             .end((err, res) => {
                 if (err) {

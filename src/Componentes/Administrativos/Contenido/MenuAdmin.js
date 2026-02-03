@@ -28,6 +28,11 @@ export default class MenuAdmin extends Component {
                     <span>Bitacora</span>
                 </div>
 
+                <div className="ItemMenuUsu" id="IMestudiantes" onClick={()=> this.props.fun.cambiarEstado(6)}>
+                    <img src={require("../../../image/general/cursos.png")} alt=""/>
+                    <span>Tematicas y lineas</span>
+                </div>
+
             </div>
         )
     }

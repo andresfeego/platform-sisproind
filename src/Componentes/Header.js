@@ -35,8 +35,8 @@ export default class Header extends Component {
                 </div>
                 <div className="downHeader">
                     <div className="tituloSeccion">
-                        {idSeccion == "administrativos" || idSeccion == "matriculas" || idSeccion == "certificados" ?
-                            this.props.match.params.idSeccion.toUpperCase()
+                        {idSeccion == "administrativos" || idSeccion == "matriculas" || idSeccion == "certificados" || idSeccion == "verificar_certificados" ?
+                            (idSeccion === "verificar_certificados" ? "VERIFICAR CERTIFICADOS" : this.props.match.params.idSeccion.toUpperCase())
                             :
                             [
                                 "Sección no encontrada",

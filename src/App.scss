@@ -13,10 +13,11 @@ a:-webkit-any-link {
 
 
 .MuiInput-underline {
-  background-color: $gray0 !important;
-  border-radius: 3vw !important;
-  padding-left: 0.5vw;
-  padding-right: 0.5vw;
+  background-color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding-left: 0.6vw;
+  padding-right: 0.6vw;
   overflow: hidden;
 }
 
@@ -39,6 +40,19 @@ input[type="submit" i]{
     border-bottom: none !important;
 }
 
+.MuiInputBase-input::placeholder {
+  color: $gray2 !important;
+  opacity: 1;
+}
+
+.MuiInputBase-root:not(.MuiButtonBase-root) {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+input[type="text"] {
+  border-bottom: none !important;
+}
+
 .MuiSvgIcon-root, .MuiIconButton-label{
   margin-bottom: 0em !important;
 }
@@ -52,4 +66,5 @@ input[type="submit" i]{
 .MuiFormControl-root{
   margin-right: 0.5vw !important;
   width: 100%;
+  margin-bottom: 16px !important;
 }

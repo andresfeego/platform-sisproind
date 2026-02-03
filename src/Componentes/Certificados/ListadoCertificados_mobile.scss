@@ -7,13 +7,53 @@
     width: 95%;
 }
 
+.tituloCertificados{
+    width: 100%;
+    background: #fff;
+    border: 1px solid $Secondary;
+    border-radius: 16px;
+    padding: 4vw;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 4vw;
+    align-items: center;
+}
+
+.tituloTexto{
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+    text-align: center;
+}
+
+.tituloLabel{
+    color: $gray2;
+    font-size: 3.2vw;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.tituloNombre{
+    color: $Secondary;
+    font-size: 5vw;
+    font-weight: 600;
+}
+
+.btnCambiarPersona{
+    background: $Secondary;
+    color: #fff;
+    border: none;
+    padding: 3vw 6vw;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 3.4vw;
+}
+
 .listadoCertificados>.listado{
     margin-top: 15vw;
+    padding-top: 32px;
     width: 100%;
-}
-.listadoCertificados h2{
-    text-align: center;
-    margin-bottom: 5vw;
 }
 
 .listado> .certificado{
@@ -43,6 +83,9 @@
 .certificado>.graduado{
     width: 100%;
     font-size: 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .certificado>.graduado>.iconoNoGraduado{
@@ -56,12 +99,21 @@
 .certificado>.estadoCur{
     width: 100%;
     font-size: 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 .certificado>.descargarCertificado{
     width: 40%;
     display: none;
+}
+
+.certificado>.descargarDiploma{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .certificadoMobile{
@@ -76,6 +128,23 @@
 .certificado>.noDescargarCertificado{
  width: 100%;
  font-size: 3vw;   
+}
+
+.estadoIcon{
+    font-size: 8vw;
+}
+
+.estadoLabel{
+    font-size: 3.5vw;
+    margin-top: 2vw;
+}
+
+.diplomaIcon{
+    display: inline-flex;
+    align-items: center;
+    gap: 2vw;
+    color: $Secondary;
+    font-size: 4vw;
 }
 
 }
