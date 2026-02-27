@@ -14,7 +14,6 @@
     "date-fns": "^2.16.1",
     "i": "^0.3.6",
     "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
     "npm": "^6.14.10",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.3",
@@ -28,7 +27,8 @@
     "react-spinners": "^0.9.0",
     "react-toastify": "^6.0.9",
     "redux": "^4.0.5",
-    "superagent": "^6.1.0"
+    "superagent": "^6.1.0",
+    "sass": "^1.70.0"
   },
   "scripts": {
     "start": "react-scripts start",
