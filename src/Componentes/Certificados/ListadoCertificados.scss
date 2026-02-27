@@ -120,6 +120,16 @@
     justify-content: center;
 }
 
+.certificado>.descargarCertificado.deshabilitado,
+.certificado>.descargarDiploma.deshabilitado{
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.certificado>.descargarCertificado.deshabilitado img{
+    cursor: not-allowed;
+}
+
 .descargarCertificado> img{
     width: 40%;
     cursor: pointer;

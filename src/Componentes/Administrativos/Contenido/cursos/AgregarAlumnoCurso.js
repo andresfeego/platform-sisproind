@@ -13,6 +13,7 @@ export default class AgregarAlumnoCurso extends Component {
 
     constructor(props) {
         super(props)
+        this._isMounted = false
         
         this.state = {
             open: false,
@@ -27,16 +28,30 @@ export default class AgregarAlumnoCurso extends Component {
       };
 
       componentDidMount(){
+        this._isMounted = true
 
         Promise.all([ this.getEstudiantes() , this.getEstudiantesEnCurso() ]).then(() => {
 
             this.crearlistaDisponibles()
 
         }).catch(( error ) => {
-            alert("errorrr: "+ error)
+            if (this._isMounted) {
+                nuevoMensaje(tiposAlertas.cargadoWarn, "No fue posible cargar los estudiantes")
+            }
         })
    }
 
+   componentWillUnmount() {
+        this._isMounted = false
+   }
+
+   isAbortError = (error) => {
+       if (!error) return false
+       if (error.abort) return true
+       if (error.code === 'ECONNABORTED') return true
+       if ((error.message || '').toLowerCase().includes('terminated')) return true
+       return false
+   }
 
    crearlistaDisponibles(){
 
@@ -72,6 +87,10 @@ export default class AgregarAlumnoCurso extends Component {
         .set('accept', 'json')
         .end((err, res) => {
                 if (err) {
+                    if (!this._isMounted || this.isAbortError(err)) {
+                        resolve([])
+                        return
+                    }
                     reject(err)
 
                 } else {
@@ -90,12 +109,16 @@ export default class AgregarAlumnoCurso extends Component {
 
     getEstudiantesEnCurso(){
 
-        return new Promise ((resolve, reject) => {
+    return new Promise ((resolve, reject) => {
             
             getDb('/responseSisproind/estudianteXcurso/'+this.props.curso.id)
             .set('accept', 'json')
             .end((err, res) => {
                     if (err) {
+                        if (!this._isMounted || this.isAbortError(err)) {
+                            resolve([])
+                            return
+                        }
                         reject(err)
 
                     } else {
@@ -113,7 +136,7 @@ export default class AgregarAlumnoCurso extends Component {
         })
     }
 
-      handleClickOpen = () => {
+    handleClickOpen = () => {
         this.setState({
             open: true,
             busqueda: ""
@@ -127,7 +150,9 @@ export default class AgregarAlumnoCurso extends Component {
             this.crearlistaDisponibles()
 
         }).catch(( error ) => {
-            alert("errorrr: "+ error)
+            if (this._isMounted) {
+                nuevoMensaje(tiposAlertas.cargadoWarn, "No fue posible cargar los estudiantes")
+            }
         })
 
     };

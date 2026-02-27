@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: 'Helvetica-Oblique'
     },
+    lineaNombre: {
+        textAlign: 'center',
+        fontSize: 28,
+        fontFamily: 'Helvetica-Bold'
+    },
     lineaCurso: {
         textAlign: 'center',
         fontSize: 12,
@@ -161,6 +166,13 @@ const parseFecha = (value) => {
     return d
 }
 
+const getNombreEstudiante = (curso) => {
+    const nombre = curso.nombres || curso.nombre || ''
+    const apellido = curso.apellidos || curso.apellido || ''
+    const full = `${nombre} ${apellido}`.trim()
+    return full || 'SIN_DATO'
+}
+
 const formatoDiasCurso = (fechaInicio, fechaCierre) => {
     const inicio = parseFecha(fechaInicio)
     const cierre = parseFecha(fechaCierre)
@@ -219,6 +231,29 @@ const getVerifyUrl = (curso) => {
     return url
 }
 
+const isSameOriginSisproind = () => {
+    if (typeof window === 'undefined' || !window.location || !window.location.hostname) return false
+    return /(^|\.)sisproind\.com$/i.test(window.location.hostname)
+}
+
+const getPdfImageUrl = (url) => {
+    if (!url) return ''
+    let resolved = url
+    if (typeof window !== 'undefined' && resolved.startsWith('/')) {
+        if (isSameOriginSisproind()) {
+            if (resolved.startsWith('/firmas/')) {
+                resolved = `/plataforma${resolved}`
+            }
+        } else {
+            resolved = `${window.location.origin}${resolved}`
+        }
+    }
+    if (typeof window !== 'undefined') {
+        console.log('[Diploma][pdf-image]', url, '=>', resolved)
+    }
+    return resolved
+}
+
 const getQrUrl = (curso) => {
     const verifyUrl = getVerifyUrl(curso)
     if (!verifyUrl) return ''
@@ -228,10 +263,20 @@ const getQrUrl = (curso) => {
 const DiplomaDoc = ({ curso }) => (
     <Document>
         <Page size="LETTER" orientation="landscape" style={styles.page}>
-            <Image
-                style={styles.fondo}
-                src={curso && curso.urlFondoDiploma ? buildFondoDiplomaUrl(curso.urlFondoDiploma) : buildDiplomaUrl('default_image_diploma.jpeg')}
-            />
+            {(() => {
+                const fondoUrl = curso && curso.urlFondoDiploma
+                    ? buildFondoDiplomaUrl(curso.urlFondoDiploma)
+                    : buildDiplomaUrl('default_image_diploma.jpg')
+                if (typeof window !== 'undefined') {
+                    console.log('[Diploma][fondo]', curso && curso.urlFondoDiploma, '=>', fondoUrl)
+                }
+                return (
+                    <Image
+                        style={styles.fondo}
+                        src={fondoUrl}
+                    />
+                )
+            })()}
 
             <View style={[styles.lineaWrapper, { top: 150 }]}>
                 <Text style={[styles.tituloPrincipal, styles.textoQuemado]}>
@@ -245,7 +290,14 @@ const DiplomaDoc = ({ curso }) => (
                 {testMode ? <Text style={styles.marker}>03</Text> : null}
             </View>
 
-            <View style={[styles.lineaWrapper, { top: 255 }]}>
+            <View style={[styles.lineaWrapper, { top: 240 }]}>
+                <Text style={[styles.lineaNombre, styles.textoDinamico]}>
+                    {getNombreEstudiante(curso)}
+                </Text>
+                {testMode ? <Text style={styles.marker}>04-1</Text> : null}
+            </View>
+
+            <View style={[styles.lineaWrapper, { top: 280 }]}>
                 <Text style={[styles.lineaCedula, styles.textoQuemado]}>
                     Con Cedula de Ciudadania N.º 
                     <Text style={[styles.bold, styles.textoDinamico]}>{curso.idEstudiante || 'SIN_DATO'}</Text>
@@ -253,39 +305,39 @@ const DiplomaDoc = ({ curso }) => (
                 {testMode ? <Text style={styles.marker}>04</Text> : null}
             </View>
 
-            <View style={[styles.lineaWrapper, { top: 285 }]}>
+            <View style={[styles.lineaWrapper, { top: 310 }]}>
                 <Text style={[styles.lineaCurso, styles.textoQuemado]}>
                     CURSO Y APROBO LA CAPACITACION Y ENTRENAMIENTO DE <Text style={styles.textoDinamico}>{curso.nombreTema || 'SIN_DATO'}</Text>
                 </Text>
                 {testMode ? <Text style={styles.marker}>05</Text> : null}
             </View>
 
-            <View style={[styles.lineaWrapper, { top: 315 }]}>
+            <View style={[styles.lineaWrapper, { top: 335 }]}>
                 <Text style={[styles.lineaNivel, styles.textoDinamico]}>
                     {curso.nombre || 'SIN_DATO'}
                 </Text>
                 {testMode ? <Text style={styles.marker}>06</Text> : null}
             </View>
-            <View style={[styles.lineaWrapper, { top: 340 }]}>
+            <View style={[styles.lineaWrapper, { top: 360 }]}>
                 <Text style={[styles.lineaDuracion, styles.textoQuemado]}>
                     Con una duracion de (<Text style={styles.textoDinamico}>{curso.horas || curso.numeroHoras || 'SIN_DATO'}</Text>) horas.
                 </Text>
                 {testMode ? <Text style={styles.marker}>07</Text> : null}
             </View>
 
-            <View style={[styles.lineaWrapper, { top: 375 }]}>
+            <View style={[styles.lineaWrapper, { top: 395 }]}>
                 <Text style={[styles.lineaTexto, styles.textoQuemado, { fontSize: 10 }]}>
                     Realizado en la ciudad de <Text style={styles.textoQuemado}>Sogamoso Boyaca</Text> <Text style={styles.textoDinamico}>{formatoDiasCurso(curso.fechaInicio, curso.fechaCierre)}</Text>.
                 </Text>
                 {testMode ? <Text style={styles.marker}>08</Text> : null}
             </View>
-            <View style={[styles.lineaWrapper, { top: 395 }]}>
+            <View style={[styles.lineaWrapper, { top: 415 }]}>
                 <Text style={[styles.lineaTexto, styles.textoQuemado, { fontSize: 10 }]}>
                     Dando cumplimiento a los requisitos exigidos por la Resolucion <Text style={styles.textoDinamico}>{curso.resolucion || 'SIN_DATO'}</Text>.
                 </Text>
                 {testMode ? <Text style={styles.marker}>09</Text> : null}
             </View>
-            <View style={[styles.lineaWrapper, { top: 415 }]}>
+            <View style={[styles.lineaWrapper, { top: 435 }]}>
                 <Text style={[styles.lineaTexto, styles.textoQuemado, { fontSize: 10 }]}>
                     En testimonio de lo anterior se expide en <Text style={styles.textoQuemado}>Sogamoso Boyaca</Text> a los <Text style={styles.textoDinamico}>{formatoFechaLarga(curso.fechaCierre)}</Text>.
                 </Text>
@@ -297,7 +349,7 @@ const DiplomaDoc = ({ curso }) => (
                     {curso.urlFirmaInstructor ? (
                         <Image
                             style={styles.firmaBg}
-                            src={buildFirmaUrl(curso.urlFirmaInstructor)}
+                            src={getPdfImageUrl(buildFirmaUrl(curso.urlFirmaInstructor))}
                         />
                     ) : null}
                     <View style={styles.firmaTexto}>
