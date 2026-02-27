@@ -7,10 +7,12 @@ const DEFAULT_DEV_DIPLOMAS = 'http://localhost:3020/plataforma/diplomas';
 const DEFAULT_PROD_DIPLOMAS = 'https://www.sisproind.com/plataforma/diplomas';
 
 const getDefaultProdHttps = () => {
-  if (typeof window === 'undefined' || !window.location || !window.location.hostname) {
-    return 'https://localhost:8443';
+  // In production we serve the frontend behind nginx and proxy backend routes.
+  // So the backend base can be same-origin (no explicit port).
+  if (typeof window === 'undefined' || !window.location || !window.location.origin) {
+    return 'https://localhost';
   }
-  return `https://${window.location.hostname}:8443`;
+  return window.location.origin;
 };
 
 const normalizeBaseUrl = (url) => {
