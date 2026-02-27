@@ -87,9 +87,18 @@ export default class ListadoCertificados extends Component {
     }
 
     renderIconoDescarga(cursoA){
+            if (cursoA.estado != 4) {
+                return (
+                    <BootstrapTooltip title="El curso debe estar finalizado para descargar la constancia">
+                        <span className="descargarCertificado deshabilitado">
+                            <img src={require("../../image/general/constancia.png")} alt=""/>
+                        </span>
+                    </BootstrapTooltip>
+                )
+            }
+
             return(
                 [
-
                     <span className="descargarCertificado" onClick={() => this.verCertificado(cursoA)}>
                         <img src={require("../../image/general/constancia.png")} alt=""/>
                     </span>,
@@ -102,10 +111,10 @@ export default class ListadoCertificados extends Component {
                         style={{
                             textDecoration: "none",
                             padding: "10px",
-                        color: "#4a4a4a",
-                        backgroundColor: "#f2f2f2",
-                        border: "1px solid #4a4a4a"
-                    }}
+                            color: "#4a4a4a",
+                            backgroundColor: "#f2f2f2",
+                            border: "1px solid #4a4a4a"
+                        }}
                     >
                         {({ blob, url, loading, error }) =>
                         loading ? "Cargando documento" : "Descargar certificado"
@@ -118,6 +127,18 @@ export default class ListadoCertificados extends Component {
     renderIconoDiploma(cursoA){
         if (cursoA.graduado != 1) {
             return null
+        }
+        if (cursoA.estado != 4) {
+            return (
+                <BootstrapTooltip title="El curso debe estar finalizado para descargar el diploma">
+                    <span className="descargarDiploma deshabilitado">
+                        <span className="diplomaIcon">
+                            <SchoolIcon />
+                            <span>Diploma</span>
+                        </span>
+                    </span>
+                </BootstrapTooltip>
+            )
         }
 
         return (

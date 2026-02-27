@@ -88,6 +88,21 @@ export default class DetallesInstructor extends Component {
         }
     }
 
+    onErrorFirma = (e) => {
+        const target = e.target
+        if (target.dataset.fallbackApplied === '1') {
+            this.setState({ mostrarFirma: false })
+            return
+        }
+        const current = target.getAttribute('src') || ''
+        if (current.startsWith('/firmas/')) {
+            target.dataset.fallbackApplied = '1'
+            target.src = `/plataforma${current}`
+            return
+        }
+        this.setState({ mostrarFirma: false })
+    }
+
     renderTelefonos() {
         if (this.state.telefonos.length == 0) {
             return null
@@ -151,7 +166,7 @@ export default class DetallesInstructor extends Component {
                                 src={firmaUrl}
                                 alt="Firma instructor"
                                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                                onError={() => this.setState({ mostrarFirma: false })}
+                                onError={this.onErrorFirma}
                             />
                         </div>
                     ) : (

@@ -8,12 +8,18 @@ import { nuevoMensaje, tiposAlertas } from '../../../../Inicialized/Toast';
 import EditarCurso from './EditarCurso';
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate';
 import BookIcon from '@material-ui/icons/Book';
+import SchoolIcon from '@material-ui/icons/School';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
 import { zfill } from '../../../../Inicialized/FuncionesGlobales';
 import { agregarEventoBitacora } from '../../../../Inicialized/Bitacora';
 import moment from 'moment';
 import 'moment/locale/es';
+import VistaPdf from '../../../Certificados/VistaPdf';
+import { pdf } from '@react-pdf/renderer';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import DiplomaDoc from '../../../Certificados/Diploma';
 
 moment.locale('es');
 
@@ -41,7 +47,14 @@ export default class DetalleCurso extends Component {
 
         this.state = {
             curso: this.props.curso,
-            estudiantesEnCurso: null
+            estudiantesEnCurso: null,
+            mostrandoDiploma: false,
+            cargandoDiploma: false,
+            cursoDiploma: null,
+            progresoZip: {
+                total: 0,
+                actual: 0
+            }
         }
     }
 
@@ -141,6 +154,125 @@ export default class DetalleCurso extends Component {
             });
     }
 
+    verDiplomaAlumno = (estudiante) => {
+        const idEstudiante = estudiante.idEstudiante || estudiante.id
+        if (!idEstudiante) {
+            nuevoMensaje(tiposAlertas.cargadoError, 'No se pudo identificar el estudiante')
+            return
+        }
+        this.setState({ cargandoDiploma: true })
+        getDb(`/responseSisproind/validarDiploma/${idEstudiante}/${this.props.curso.id}`)
+            .set('accept', 'json')
+            .end(async (err, res) => {
+                if (err) {
+                    this.setState({ cargandoDiploma: false })
+                    nuevoMensaje(tiposAlertas.cargadoError, 'No fue posible cargar el diploma')
+                    return
+                }
+
+                const respuesta = JSON.parse(res.text || '[]')
+                if (!respuesta.length) {
+                    this.setState({ cargandoDiploma: false })
+                    nuevoMensaje(tiposAlertas.cargadoWarn, 'No hay informacion para mostrar el diploma')
+                    return
+                }
+
+                let cursoDiploma = respuesta[0]
+                try {
+                    cursoDiploma = await this.completarFondoDiploma(cursoDiploma, idEstudiante)
+                } catch (e) {
+                    // fallback silencioso
+                }
+
+                this.setState({
+                    cargandoDiploma: false,
+                    mostrandoDiploma: true,
+                    cursoDiploma: { ...cursoDiploma, tipoPdf: 'diploma' }
+                })
+            })
+    }
+
+    cerrarDiploma = () => {
+        this.setState({ mostrandoDiploma: false, cursoDiploma: null })
+    }
+
+    fetchJson = (url) => {
+        return new Promise((resolve, reject) => {
+            getDb(url)
+                .set('accept', 'json')
+                .end((err, res) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        try {
+                            resolve(JSON.parse(res.text || '[]'))
+                        } catch (parseErr) {
+                            reject(parseErr)
+                        }
+                    }
+                })
+        })
+    }
+
+    completarFondoDiploma = async (cursoDiploma, idEstudiante) => {
+        if (cursoDiploma && cursoDiploma.urlFondoDiploma) {
+            return cursoDiploma
+        }
+        const lista = await this.fetchJson(`/responseSisproind/certificadosCursos/${idEstudiante}`)
+        const encontrado = (Array.isArray(lista) ? lista : []).find(
+            (item) => String(item.idCurso) === String(this.props.curso.id)
+        )
+        if (encontrado && encontrado.urlFondoDiploma) {
+            return { ...cursoDiploma, urlFondoDiploma: encontrado.urlFondoDiploma }
+        }
+        return cursoDiploma
+    }
+
+    descargarDiplomasCurso = async () => {
+        try {
+            nuevoMensaje(tiposAlertas.cargando, 'Generando diplomas...')
+            const estudiantes = await this.fetchJson(`/responseSisproind/estudianteXcurso/${this.props.curso.id}`)
+            const graduados = (Array.isArray(estudiantes) ? estudiantes : []).filter((item) => item.graduado == 1)
+
+            if (graduados.length === 0) {
+                nuevoMensaje(tiposAlertas.cargadoWarn, 'No hay alumnos graduados para este curso')
+                return
+            }
+
+            const zip = new JSZip()
+            this.setState({ progresoZip: { total: graduados.length, actual: 0 } })
+
+            for (let i = 0; i < graduados.length; i += 1) {
+                const estudiante = graduados[i]
+                const idEstudiante = estudiante.idEstudiante || estudiante.id
+                if (!idEstudiante) {
+                    this.setState({ progresoZip: { total: graduados.length, actual: i + 1 } })
+                    continue
+                }
+                const data = await this.fetchJson(`/responseSisproind/validarDiploma/${idEstudiante}/${this.props.curso.id}`)
+                if (!data.length) {
+                    this.setState({ progresoZip: { total: graduados.length, actual: i + 1 } })
+                    continue
+                }
+                let cursoDiploma = data[0]
+                cursoDiploma = await this.completarFondoDiploma(cursoDiploma, idEstudiante)
+                const blob = await pdf(<DiplomaDoc curso={cursoDiploma} />).toBlob()
+                const nombreArchivo = `diploma_${idEstudiante}_${this.props.curso.id}.pdf`
+                zip.file(nombreArchivo, blob)
+                this.setState({ progresoZip: { total: graduados.length, actual: i + 1 } })
+            }
+
+            const zipBlob = await zip.generateAsync({ type: 'blob' })
+            saveAs(zipBlob, `diplomas_curso_${this.props.curso.id}.zip`)
+            nuevoMensaje(tiposAlertas.cargadoSuccess, 'Diplomas generados')
+            this.setState({ progresoZip: { total: 0, actual: 0 } })
+        } catch (error) {
+            console.error(error)
+            nuevoMensaje(tiposAlertas.cargadoError, 'No fue posible generar los diplomas')
+            this.setState({ progresoZip: { total: 0, actual: 0 } })
+        }
+    }
+
 
     renderListaAlumnos() {
 
@@ -152,6 +284,12 @@ export default class DetalleCurso extends Component {
                     <div className="texto">
                         {item.nombres + " " + item.apellidos + " - " + item.id}
                     </div>
+
+                    {item.graduado == 1 ? (
+                        <BootstrapTooltip title="Ver diploma del estudiante">
+                            <SchoolIcon className="iconoDiploma" onClick={() => this.verDiplomaAlumno(item)} />
+                        </BootstrapTooltip>
+                    ) : null}
 
                     {item.graduado == 0 ?
                         <BootstrapTooltip title="Click para cambiar estado a graduado">
@@ -219,6 +357,21 @@ export default class DetalleCurso extends Component {
 
                 <br />
 
+                <button className="btn-descargarDiplomas" onClick={this.descargarDiplomasCurso}>
+                    Descargar diplomas (ZIP)
+                </button>
+                {this.state.progresoZip.total > 0 ? (
+                    <div className="progresoZip">
+                        Generando {this.state.progresoZip.actual} / {this.state.progresoZip.total}
+                    </div>
+                ) : null}
+                {this.state.estudiantesEnCurso ? (
+                    <div className="resumenAlumnos">
+                        <div>Alumnos inscritos: {this.state.estudiantesEnCurso.length}</div>
+                        <div>Alumnos graduados: {this.state.estudiantesEnCurso.filter((item) => item.graduado == 1).length}</div>
+                    </div>
+                ) : null}
+
                 <AgregarAlumnoCurso curso={curso} fun={this} detalles={false} />
 
                 <h3>Alumnos</h3>
@@ -230,6 +383,18 @@ export default class DetalleCurso extends Component {
                         this.renderListaAlumnos()
                     }
                 </div>
+
+                {this.state.mostrandoDiploma && this.state.cursoDiploma ? (
+                    <div className="modalDiploma">
+                        <div className="modalDiplomaCard">
+                            <div className="modalDiplomaHeader">
+                                <h3>Diploma del estudiante</h3>
+                                <button className="btn-secundario" onClick={this.cerrarDiploma}>Cerrar</button>
+                            </div>
+                            <VistaPdf curso={this.state.cursoDiploma} />
+                        </div>
+                    </div>
+                ) : null}
 
             </div>
         )

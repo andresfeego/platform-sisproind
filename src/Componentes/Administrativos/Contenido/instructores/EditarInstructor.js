@@ -365,6 +365,21 @@ export default class EditarInstructor extends Component {
 
     }
 
+    onErrorFirma = (e) => {
+        const target = e.target
+        if (target.dataset.fallbackApplied === '1') {
+            this.setState({ mostrarFirma: false })
+            return
+        }
+        const current = target.getAttribute('src') || ''
+        if (current.startsWith('/firmas/')) {
+            target.dataset.fallbackApplied = '1'
+            target.src = `/plataforma${current}`
+            return
+        }
+        this.setState({ mostrarFirma: false })
+    }
+
     render() {
         const firmaUrl = this.props.instructor && this.props.instructor.urlFirmaInstructor ? buildFirmaUrl(this.props.instructor.urlFirmaInstructor) : ""
         return (
@@ -412,7 +427,7 @@ export default class EditarInstructor extends Component {
                                             src={firmaUrl}
                                             alt="Firma instructor"
                                             style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fafafa' }}
-                                            onError={() => this.setState({ mostrarFirma: false })}
+                                            onError={this.onErrorFirma}
                                         />
                                         <button type="button" onClick={this.clearFirma} style={{ position: 'absolute', top: '6px', right: '6px', width: '26px', height: '26px', borderRadius: '50%', border: 'none', background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', cursor: 'pointer' }}>x</button>
                                     </div>
