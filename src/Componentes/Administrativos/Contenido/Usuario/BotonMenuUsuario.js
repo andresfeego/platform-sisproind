@@ -39,7 +39,7 @@ export default class BotonMenuUsuario extends Component {
                     {usuario.urlImage == "" ?
                         <img src={require("../../../../image/general/perfil-de-usuario.png")} alt="" className="imagenPerfil" />
                         :
-                        <img src={"http://www.sisproind.com/plataforma/image/estudiantes/" + usuario.urlImage} alt="" />
+                        <img src={"/image/estudiantes/" + usuario.urlImage} alt="" />
                     }
                 </Box>
 

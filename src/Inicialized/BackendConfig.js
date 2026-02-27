@@ -1,10 +1,17 @@
 const DEFAULT_DEV_HTTP = 'http://localhost:3020/api';
-const DEFAULT_DEV_ASSETS = 'http://localhost:3020/src/srcSisproind/plataforma';
-const DEFAULT_PROD_ASSETS = 'https://www.sisproind.com/plataforma';
+
+// In VPS/prod we serve assets from the same origin via nginx:
+// - /firmas/instructores/*
+// - /diplomas/*
+// Avoid hardcoding www + /plataforma to prevent CORS/mixed-origin issues.
+const DEFAULT_DEV_ASSETS = 'http://localhost:3020';
+const DEFAULT_PROD_ASSETS = '';
+
 const DEFAULT_DEV_FIRMAS = 'http://localhost:3020/firmas/instructores';
-const DEFAULT_PROD_FIRMAS = 'https://www.sisproind.com/plataforma/firmas/instructores';
-const DEFAULT_DEV_DIPLOMAS = 'http://localhost:3020/plataforma/diplomas';
-const DEFAULT_PROD_DIPLOMAS = 'https://www.sisproind.com/plataforma/diplomas';
+const DEFAULT_PROD_FIRMAS = '';
+
+const DEFAULT_DEV_DIPLOMAS = 'http://localhost:3020/diplomas';
+const DEFAULT_PROD_DIPLOMAS = '';
 
 const getDefaultProdHttps = () => {
   // In production we serve the frontend behind nginx and proxy backend routes.
@@ -44,7 +51,8 @@ export const getAssetsBaseUrl = () => {
   if (explicit) return normalizeBaseUrl(explicit);
 
   if (process.env.NODE_ENV === 'production') {
-    return normalizeBaseUrl(process.env.REACT_APP_ASSETS_PROD_URL || DEFAULT_PROD_ASSETS);
+    // default: same-origin
+    return normalizeBaseUrl(process.env.REACT_APP_ASSETS_PROD_URL || window.location.origin);
   }
 
   return normalizeBaseUrl(process.env.REACT_APP_ASSETS_DEV_URL || DEFAULT_DEV_ASSETS);
@@ -69,19 +77,23 @@ export const buildAssetsUrl = (path) => {
 export const buildFondoDiplomaUrl = (path) => {
   if (!path) return '';
   if (/^https?:\/\//i.test(path)) return path;
-  const origin = getAssetsOrigin();
-  if (!origin) return path;
+
+  // Same-origin assets (nginx serves /diplomas/*)
+  const origin = window?.location?.origin || '';
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  if (normalizedPath.startsWith('/diplomas/')) {
-    return `${origin}/plataforma${normalizedPath}`;
-  }
+
+  // Accept either /diplomas/* or legacy /plataforma/diplomas/*
   if (normalizedPath.startsWith('/plataforma/')) {
+    return `${origin}${normalizedPath.replace(/^\/plataforma\//, '/')}`;
+  }
+
+  // If DB already stores /diplomas/* we keep it.
+  if (normalizedPath.startsWith('/diplomas/')) {
     return `${origin}${normalizedPath}`;
   }
-  if (normalizedPath.startsWith('/fondos/temas/')) {
-    return `${origin}/plataforma${normalizedPath}`;
-  }
-  return `${origin}/plataforma/diplomas${normalizedPath.startsWith('/') ? '' : '/'}${normalizedPath}`;
+
+  // Fallback: treat as filename under /diplomas
+  return `${origin}/diplomas/${normalizedPath.replace(/^\//, '')}`;
 };
 
 export const getFirmasBaseUrl = () => {
@@ -89,7 +101,8 @@ export const getFirmasBaseUrl = () => {
   if (explicit) return normalizeBaseUrl(explicit);
 
   if (process.env.NODE_ENV === 'production') {
-    return normalizeBaseUrl(process.env.REACT_APP_FIRMAS_PROD_URL || DEFAULT_PROD_FIRMAS);
+    // default: same-origin
+    return normalizeBaseUrl(process.env.REACT_APP_FIRMAS_PROD_URL || window.location.origin);
   }
 
   return normalizeBaseUrl(process.env.REACT_APP_FIRMAS_DEV_URL || DEFAULT_DEV_FIRMAS);
@@ -114,7 +127,8 @@ export const getDiplomasBaseUrl = () => {
   if (explicit) return normalizeBaseUrl(explicit);
 
   if (process.env.NODE_ENV === 'production') {
-    return normalizeBaseUrl(process.env.REACT_APP_DIPLOMAS_PROD_URL || DEFAULT_PROD_DIPLOMAS);
+    // default: same-origin
+    return normalizeBaseUrl(process.env.REACT_APP_DIPLOMAS_PROD_URL || window.location.origin);
   }
 
   return normalizeBaseUrl(process.env.REACT_APP_DIPLOMAS_DEV_URL || DEFAULT_DEV_DIPLOMAS);

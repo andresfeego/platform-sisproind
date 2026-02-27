@@ -204,7 +204,7 @@ export default class DetalleCurso extends Component {
                     {curso.urlImgIns == "" ?
                         <img src={require("../../../../image/general/estudiantes.png")} alt="" className="imagenPerfil" />
                         :
-                        <img src={"http://www.sisproind.com/plataforma/image/instructores/" + curso.urlImgIns} alt="" />
+                        <img src={"/image/instructores/" + curso.urlImgIns} alt="" />
                     }
                     <div className="txtDetallesInst">
                         <h5>Instructor</h5>

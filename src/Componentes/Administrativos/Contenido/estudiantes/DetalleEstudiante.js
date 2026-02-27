@@ -190,7 +190,7 @@ export default class DetalleEstudiante extends Component {
                         {estudiante.urlImage == "" ?
                             <img src={require("../../../../image/general/estudiantes.png")} alt="" className="imagenPerfil" />
                             :
-                            <img src={"http://www.sisproind.com/plataforma/image/estudiantes/" + estudiante.urlImage} alt="" />
+                            <img src={"/image/estudiantes/" + estudiante.urlImage} alt="" />
                         }
 
                         <span><strong>Tipo documento: </strong> {this.renderTipoDocumento(estudiante.tipoDoc)} </span>

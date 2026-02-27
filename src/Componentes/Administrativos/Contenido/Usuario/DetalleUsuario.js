@@ -50,7 +50,7 @@ export default class DetalleUsuario extends Component {
                             {usuario.urlImage == "" ?
                                 <img src={require("../../../../image/general/perfil-de-usuario.png")} alt="" className="imagenPerfil" />
                                 :
-                                <img src={"http://www.sisproind.com/plataforma/image/estudiantes/" + usuario.urlImage} alt="" />
+                                <img src={"/image/estudiantes/" + usuario.urlImage} alt="" />
                             }
                             <span><strong>Id: </strong> {usuario.id}</span>
                             <span><strong>Nombres: </strong> {usuario.nombre}</span>
